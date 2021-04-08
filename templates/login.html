@@ -3,7 +3,7 @@
 <head>
     <title>Flask Intro - login page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="static/styles/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+    <link href="static/styles/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="static/styles/login.css" rel="stylesheet">
 
     {% import 'components/Input.html' as forms %}
@@ -11,6 +11,9 @@
 
 <body>
     <div>
+        {% if error %}
+        <p class="error"><strong>Erro:</strong> {{ error }}</p>
+        {% endif %}
         <main>
             <form action="" method="post">
                 <fieldset>
