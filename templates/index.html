@@ -15,6 +15,19 @@
 	{% import 'components/Product.html' as prod %}
 </head>
 
+<header>
+	<div class="navbar">
+		<div class="navbar-avatar">
+			<img class="avatar" src='static/img/anon.png'>
+			<a class="provider-link" href="/fornecedor">Minha conta</a>
+		</div>
+		<div class="navbar-cart">
+			<img class="cart" src='static/img/cart.jpg'>
+			<a class="cart-link" href="/carrinho">Carrinho</a>
+		</div>
+	</div>
+</header>
+
 <body>
 
 	<div class="everything-container">
@@ -141,11 +154,12 @@
 			<!-- COMPONENTS SIDEBAR END .// -->
 		</aside>
 
-		<output>
-			<section class='products-container'>
+		<div class="products-container">
+			<section class='inner-products-container'>
 				<div class='container'>
-					<div class='row'>
+					<div class='products-container-row'>
 						
+						{{ prod.Product("Brennao", "static/img/brenno.png", "400,00") }}
 						{{ prod.Product("Brennao", "static/img/brenno.png", "400,00") }}
 						{{ prod.Product("Brennao", "static/img/brenno.png", "400,00") }}
 						{{ prod.Product("Brennao", "static/img/brenno.png", "400,00") }}
@@ -155,7 +169,7 @@
 					</div>
 				</div>
 			</section>
-		</output>
+		</div>
 	</div>
 </body>
 

@@ -2,6 +2,72 @@ a {
     word-break: break-all
 }
 
+header {
+    height: 80px;
+    background-color: #ddd; 
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px;
+    margin-right: 8px;
+    margin-top: 2px;
+    /* margin-bottom: 30px; */
+    margin-right: 10px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #333333;
+}
+
+.provider-link {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 15px;
+    text-decoration: none;
+    color: #000;
+}
+
+.provider-link:hover {
+    cursor: pointer;
+    color: rgb(32, 32, 32);
+    text-decoration: none;
+}
+
+.navbar-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cart {
+    width: 40px;
+    margin-top: 2px;
+    margin-right: 8px;
+
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #333333;
+}
+
+.cart-link {
+    margin-top: 4px;
+    margin-bottom: 3px;
+    margin-right: 15px;
+    margin-left: 3px;
+    text-decoration: none;
+    color: #000;
+}
+
 .everything-container {
     display: flex;
     flex-direction: row;
@@ -19,17 +85,39 @@ a {
 }
 
 .sidebar {
-    max-width: 18%;
-    margin-left: 80px;
+    max-width: 20%;
+    margin-top: 30px;
+    margin-left: 100px;
+    margin-right: 80px;
 }
 
-.main-wrapper {
+.products-container {
+    display: flex;
+    /* width: 100%; */
+    margin-top: 30px;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+
+    /* box-sizing: border-box; */
+}
+
+.inner-products-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.products-container-row {
+    flex-wrap: wrap;
+    display: flex;
+}
+
+/* .main-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap
-}
+} */
 
 .main-doc {
     width: 100%;
@@ -120,13 +208,6 @@ a {
     padding-top: 56px
 }
 
-.products-container {
-    display: block;
-    margin-left: 100px;
-    width: 100%;
-    box-sizing: border-box;
-    
-}
 
 .doc-headers-footers-wrap output {
     padding-bottom: 0
