@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="static/styles/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+    <link href="static/styles/login.css" rel="stylesheet">
+
+    {% import 'components/Input.html' as forms %}
+</head>
+
+<body>
+    <div>
+        <main>
+            <form action="" method="post">
+                <fieldset>
+                    {{ forms.Input('Usuário', 'username', request.form.username) }}
+                    {{ forms.Input('Senha', 'password', request.form.password, 'password') }}
+                </fieldset>
+
+                <footer>
+                    <button type="submit">Login</button>
+                </footer>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>

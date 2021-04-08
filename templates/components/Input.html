@@ -1,0 +1,6 @@
+{% macro Input(label, name, value, type='text') -%}
+<div class="input-block">
+    <label>{{label}}</label>
+    <input type="{{type}}" name="{{name}}" value={{value}} >
+</div>
+{%- endmacro %}
