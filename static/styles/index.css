@@ -1,6 +1,37 @@
-body,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    background-color: #252c33;
+  }
+  
+  html, body {
+    height: 100vh;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  #root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  body, input, button, textarea {
+    font: 300 Poppins;
+    color: #F8F8FC;
+  }
+  
+  
+
+/* body,
 html {
     height: 100%;
+    background-color: #404040;
     background-repeat: no-repeat;
     background-image: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(195, 195, 195, 1) 76%, rgba(158, 158, 158, 1) 100%);
 }
@@ -111,4 +142,4 @@ html {
 .forgot-password:hover {
     color: #0c6121;
 }
-
+ */
