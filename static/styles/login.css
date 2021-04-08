@@ -20,7 +20,7 @@ header img{
 body, html {
     height: 100%;
     font-family: Poppins, 300, sans-serif;
-
+    background-color: #d6d6d6;
 }
 
 input {
