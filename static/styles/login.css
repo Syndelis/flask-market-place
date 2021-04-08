@@ -1,39 +1,152 @@
-.input-block {
-    position: relative
+* {
+    margin: 0px; 
+    padding: 0px; 
+    box-sizing: border-box;
+    /* background-color: #252c33; */
+    overflow: hidden;
 }
 
-.input-block + .input-block {
-    margin-top: 8px;
-}
-
-.input-block label {
-    font-size: 20px;
-}
-
-.input-block input {
-    width: 100%;
-    height: 40px;
-    margin-top: 10px;
-    border-radius: 5px;
-    font: 700px 300 Poppins;
-    color: black;
-}
-
-button {
-    width: 100%;
-    height: 40px;
-    background: #04D361;
-    color: #F8F8FC;
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
+header {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    margin-top: 20px;
+}
 
-    font: 700 20px Poppins;
-    font-weight: bold;
-    font-size: 17px;
-  }
+header img{
+    width: 800px;
+    margin-top: 30px;
+}
+
+body, html {
+    height: 100%;
+    font-family: Poppins, 300, sans-serif;
+
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+input::-webkit-input-placeholder { color: #999999; }
+input:-moz-placeholder { color: #999999; }
+input::-moz-placeholder { color: #999999; }
+input:-ms-input-placeholder { color: #999999; }
+
+textarea::-webkit-input-placeholder { color: #999999; }
+textarea:-moz-placeholder { color: #999999; }
+textarea::-moz-placeholder { color: #999999; }
+textarea:-ms-input-placeholder { color: #999999; }
+
+button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+/* iframe {
+    border: none !important;
+} */
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40%;
+    width: 80px;
+    margin-bottom: 30px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #333333;
+}
+
+.login-form {
+width: 100%;
+min-height: 100%;
+padding: 15px;
+margin-left: 40%;
+margin-top: 40px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.login-form {
+width: 390px;
+}
+
+.login-form-title {
+display: block;
+font: 700 20px Poppins;
+font-size: 24px;
+color: #333333;
+line-height: 1.2;
+text-align: center;
+padding-bottom: 44px;
+}
+
+input.input1 {
+height: 50px;
+border-radius: 25px;
+padding: 0 30px;
+}
+
+.wrap-input1 {
+position: relative;
+width: 100%;
+z-index: 1;
+margin-bottom: 20px;
+}
+
+.input1 {
+display: block;
+width: 100%;
+background: #e6e6e6;
+font: 700 18px Poppins;
+line-height: 1.5;
+color: #666666;
+}
+
+
+.container-button {
+display: -webkit-box;
+display: -webkit-flex;
+display: -moz-box;
+display: -ms-flexbox;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.button {
+/* min-width: 193px; */
+height: 40px;
+width:100%;
+border-radius: 25px;
+background: #57b846;
+font: 700 18px Poppins;
+line-height: 1.5;
+color: #fff;
+
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0 25px;
+
+cursor: pointer;
+transition: all 0.4s;
+}
+
+.button i {
+margin-left: 7px;
+transition: all 0.4s;
+}
+
+.button:hover {
+background: #326828;
+}

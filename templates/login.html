@@ -1,32 +1,71 @@
 <html>
 
-<head>
-    <title>Flask Intro - login page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/styles/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="static/styles/login.css" rel="stylesheet">
+<div>
+    <head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link href="static/styles/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+        <link href="static/styles/login.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet"> 
 
-    {% import 'components/Input.html' as forms %}
-</head>
+        <!-- {% import 'components/Input.html' as forms %} -->
 
-<body>
-    <div>
-        {% if error %}
-        <p class="error"><strong>Erro:</strong> {{ error }}</p>
-        {% endif %}
-        <main>
-            <form action="" method="post">
-                <fieldset>
-                    {{ forms.Input('Usuário', 'username', request.form.username) }}
-                    {{ forms.Input('Senha', 'password', request.form.password, 'password') }}
-                </fieldset>
+    </head>
 
-                <footer>
-                    <button type="submit">Login</button>
-                </footer>
-            </form>
-        </main>
-    </div>
-</body>
+    
+    <header>
+        <img src={{ url_for('static', filename='logo2.png') }}>
+    </header>
+    
+    <body>
+        <div>
+            {% if error %}
+            <p class="error"><strong>Erro:</strong> {{ error }}</p>
+            {% endif %}
+            <!-- <main>
+                <form action="" method="post">
+                    <fieldset>
+                        {{ forms.Input('Usuário', 'username', request.form.username) }}
+                        {{ forms.Input('Senha', 'password', request.form.password, 'password') }}
+                    </fieldset> 
+
+                    <footer>
+                        <button type="submit">Login</button>
+                    </footer>
+                </form>
+            </main> -->
+
+            <div class="login-form">
+                <div class="container-login">
+                    <img class="avatar" src={{ url_for('static', filename='anon.png') }}>
+
+                    <form class="validate-login-form">
+                        <span class="login-form-title">
+                            Faça seu login
+                        </span>
+            
+                        <div class="wrap-input1">
+                            <input class="input1" type="text" name="name" placeholder="Nome">
+                        </div>
+            
+                        <div class="wrap-input1">
+                            <input class="input1" type="password" name="password" placeholder="Senha">
+                        </div>
+            
+                        <div class="container-button">
+                            <button class="button" type="submit">
+                                <span>
+                                    Entrar
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</div>
 
 </html>
+
