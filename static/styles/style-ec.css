@@ -3,11 +3,35 @@ a {
 }
 
 header {
-    height: 80px;
-    background-color: #ddd; 
+    height: 70px;
+    background-color: #fff; 
+}
+
+.navbar-left {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .navbar {
+    display: flex;
+    /* justify-content: flex-end; */
+}
+
+/* .navbar-left {
+    display: flex;
+    justify-content: flex-start;
+} */
+
+.navbar-logo {
+    margin-left: 30px;
+}
+
+.logo {
+    margin-bottom: 5px;
+    width: 170px;
+}
+
+.navbar-right {
     display: flex;
     justify-content: flex-end;
 }
@@ -19,7 +43,7 @@ header {
 }
 
 .avatar {
-    width: 40px;
+    width: 30px;
     margin-right: 8px;
     margin-top: 2px;
     /* margin-bottom: 30px; */
@@ -50,10 +74,10 @@ header {
 }
 
 .cart {
-    width: 40px;
+    width: 30px;
     margin-top: 2px;
+    margin-left: 3px;
     margin-right: 8px;
-
     border-radius: 50%;
     border-style: solid;
     border-color: #333333;
@@ -68,7 +92,14 @@ header {
     color: #000;
 }
 
+.cart-link:hover {
+    cursor: pointer;
+    color: rgb(32, 32, 32);
+    text-decoration: none;
+}
+
 .everything-container {
+    background-color: #ddd;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -155,10 +186,10 @@ header {
     background-color: #f0f0f0
 }
 
-.logo {
+/* .logo {
     display: inline-block;
     height: 36px
-}
+} */
 
 .menu-wrap {
     padding: 0;
