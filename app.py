@@ -29,8 +29,8 @@ def index():
 			"Vendas": "vendas DESC",
 			"A-Z": "nome ASC",
 			"Z-A": "nome DESC",
-			"Preço+": "valor ASC",
-			"Preço-": "valor DESC"
+			"Preço+": "valor DESC",
+			"Preço-": "valor ASC"
 		}
 		filter_str = ", ".join(
 			code
@@ -53,6 +53,9 @@ def index():
 			SELECT * FROM PRODUTO {where_clause} {filter_str};
 		""")
 
+	elif session.get('logged') is None:
+		return redirect('/login')
+
 	else:
 		session['last_query'] = ''
 		cursor.execute("SELECT * FROM PRODUTO;")
@@ -72,13 +75,21 @@ def login():
 
 		cursor.execute("SELECT uid, nome, senha FROM PESSOA WHERE tipo=1;")
 		for row in cursor.fetchall():
-			if (name, pswd) == row:
-				# session['logged'] = uid
+
+			if (name, pswd) == row[1:]:
+				session['logged'] = row[0]
 				return redirect('/')
 
 		error = 'Credenciais Inválidos!'
 
 	return render_template('login.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+
+	session['logged'] = None
+	return redirect('/login')
 
 
 if __name__ == '__main__':
