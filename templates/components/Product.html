@@ -1,9 +1,9 @@
-{% macro Product(title, img, price) -%}
+{% macro Product(title, img, price, pid) -%}
 <div class="col-md-3">
     <figure class="card card-product-grid">
         <div class="img-wrap"> 
             <img src="{{img}}">
-            <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Ver mais</a>
+            <a class="btn-overlay" href="/produto/{{pid}}"><i class="fa fa-search-plus"></i> Ver mais</a>
         </div>
         <figcaption class="info-wrap">
             <a href="#" class="title">{{title}}</a>

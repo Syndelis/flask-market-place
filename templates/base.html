@@ -3,8 +3,18 @@
 
 <head>
     <meta charset="utf-8">
+	
     {% block head %}
     {% endblock head %}
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href={{ url_for("static", filename="styles/bootstrap-ec.css") }} rel="stylesheet" type="text/css">
+	<link href={{ url_for("static", filename="styles/ui-ec.css") }} rel="stylesheet" type="text/css">
+	<link href={{ url_for("static", filename="styles/responsive-ec.css") }} rel="stylesheet">
+	<link href={{ url_for("static", filename="styles/all-ec.min.css") }} rel="stylesheet">
+	<link href={{ url_for("static", filename="styles/style-ec.css") }} rel="stylesheet">
+
 </head>
 
 <header class="section-header">
@@ -13,7 +23,7 @@
 	<div class="row align-items-center">
 		<div class="col-lg-3 col-4 col-sm-4">
 		<a href="/" class="navbar-logo">
-			<img class="logo" src="static/img/logo2.png">
+			<img class="logo" src={{ url_for('static', filename='img/logo2.png') }}>
 		</a> <!-- brand-wrap.// -->
 		</div>
 		<div class="col-lg-6 col-sm-8 col-8">
@@ -74,6 +84,13 @@
 <body>
     {% block body %}
     {% endblock body %}
+
+	<script src={{ url_for("static", filename="js/jquery-2.0.0.min.js") }} type="text/javascript"></script>
+	<script src={{ url_for("static", filename="js/bootstrap.bundle-ec.min.js") }} type="text/javascript"></script>
+
+	{% block script %}
+	{% endblock script %}
+
 </body>
 
 <footer>

@@ -3,6 +3,7 @@ import MySQLdb as sql
 
 app = Flask(__name__)
 app.secret_key = 'tpzin fi'
+app.config['SERVER_NAME'] = '127.0.0.1:5000'
 
 conn = sql.connect(
 	'alexandrum.go.ro',
@@ -88,6 +89,35 @@ def logout():
 
 	session['logged'] = None
 	return redirect('/login')
+
+
+@app.route('/produto/<int:pid>')
+def produto(pid: int):
+
+	cursor.execute(f"""
+		SELECT pid, fid, nome, descricao, qtd, valor FROM PRODUTO
+		WHERE pid={pid}
+	""")
+	produto = cursor.fetchall()[0]
+
+	cursor.execute(f"""
+		SELECT url FROM FOTO
+		WHERE pid={pid}
+	""")
+	fotos = [(ind, tup[0]) for ind, tup in enumerate(cursor.fetchall())]
+
+	cursor.execute(f"""
+		SELECT nome FROM PESSOA
+		WHERE uid={produto[1]}
+	""")
+	vendedor = cursor.fetchall()[0][0]
+
+	print(produto, fotos, vendedor)
+
+	return render_template(
+		'produto.html', produto=produto[2:],
+		fotos=fotos, vendedor=vendedor
+	)
 
 
 if __name__ == '__main__':
