@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.smart-checkbox', function (e) {
-        // console.log($(this).attr("id"));
+
         var name = $(this).attr("id");
 
         if ($(this).is(':checked')) {
@@ -34,6 +34,19 @@ $(document).ready(function() {
             else if (name === "Preço+") PD.checked = false;
             else if (name === "Preço-") PU.checked = false;
         }
+    });
+
+
+    $(document).on('click', '.btn-outline-primary', function (e) {
+
+        console.log($(this).attr("value"));
+        $.ajax({
+            url: '/add-to-car',
+            type: 'POST',
+            data: "{'qtd': 1, 'pid': " + $(this).attr("value") + "}", 
+            success: function (response) { console.log("Yay a response"); }
+        });
+
     });
 
 

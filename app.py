@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, Response
 import MySQLdb as sql
+from json import loads
 
 app = Flask(__name__)
 app.secret_key = 'tpzin fi'
@@ -63,6 +64,22 @@ def index():
 		'index.html',
 		data=cursor.fetchall()
 	)
+
+@app.route('/add-to-car', methods=['POST'])
+def addToCar():
+
+	d = loads(request.get_data())
+	pid = int(d['pid'])
+	qtd = int(d['qtd'])
+	cid = session['logged']
+
+	cursor.execute(f"""
+		INSERT INTO POSSUI_NO_CARRINHO
+		VALUES ({pid}, {cid}, {qtd})
+		ON DUPLICATE KEY UPDATE qtd=qtd+{qtd};
+	""")
+
+	return Response('{"a": "true"')
 
 
 @app.route('/login', methods=['GET', 'POST'])

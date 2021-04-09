@@ -1,15 +1,16 @@
 {% macro Product(title, img, price, pid) -%}
 <div class="col-md-3">
     <figure class="card card-product-grid">
-        <div class="img-wrap"> 
-            <img src="{{img}}">
+        <div class="img-wrap">
+            <a href="/produto/{{pid}}"><img src="{{img}}"></a>
             <a class="btn-overlay" href="/produto/{{pid}}"><i class="fa fa-search-plus"></i> Ver mais</a>
         </div>
         <figcaption class="info-wrap">
-            <a href="#" class="title">{{title}}</a>
+            <a href="/produto/{{pid}}" class="title">{{title}}</a>
             <div class="mt-2">
                 <var class="price">R$ {{price}}</var> <!-- price-wrap.// -->
-                <a href="#" class="btn btn-sm btn-outline-primary float-right">Comprar <i class="fa fa-shopping-cart"></i></a>
+                <!-- <a href="" class="btn btn-sm btn-outline-primary float-right">Comprar <i class="fa fa-shopping-cart"></i></a> -->
+                <button class="btn btn-sm btn-outline-primary float-right" value="{{pid}}">Comprar <i class="fa fa-shopping-cart"></i></button>
             </div> <!-- action-wrap.end -->
         </figcaption>
     </figure> <!-- card // -->
