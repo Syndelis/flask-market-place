@@ -15,11 +15,10 @@ amnt = 4
 def index():
 
 	cursor.execute("SELECT * FROM PRODUTO;")
-	unf = cursor.fetchall()
 
 	return render_template(
 		'index.html',
-		data=[unf[i:i+amnt+1] for i in range(0, len(unf), amnt)]
+		data=cursor.fetchall()
 	)
 
 
