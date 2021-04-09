@@ -1,3 +1,7 @@
+html {
+    background-color: #ddd;
+}
+
 a {
     word-break: break-all
 }
@@ -14,13 +18,7 @@ header {
 
 .navbar {
     display: flex;
-    /* justify-content: flex-end; */
 }
-
-/* .navbar-left {
-    display: flex;
-    justify-content: flex-start;
-} */
 
 .navbar-logo {
     margin-left: 30px;
@@ -98,6 +96,10 @@ header {
     text-decoration: none;
 }
 
+body {
+    background-color: #ddd;
+}
+
 .everything-container {
     background-color: #ddd;
     display: flex;
@@ -120,6 +122,7 @@ header {
     margin-top: 30px;
     margin-left: 100px;
     margin-right: 80px;
+    /* position: fixed; */
 }
 
 .products-container {
@@ -142,6 +145,14 @@ header {
     display: flex;
 }
 
+footer {
+    display: flex;
+    margin-top: 40px;
+    /* margin-bottom: 30px; */
+    justify-content: center;
+    background-color: #ddd;
+}
+
 /* .main-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -150,14 +161,14 @@ header {
     flex-wrap: nowrap
 } */
 
-.main-doc {
+/* .main-doc {
     width: 100%;
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     flex-grow: 1
-}
+} */
 
-.aside-doc {
+/* .aside-doc {
     background-color: #fff;
     -webkit-box-flex: 0;
     -ms-flex: 0 0 250px;
@@ -170,9 +181,9 @@ header {
     height: 100vh;
     z-index: 1000;
     top: 0
-}
+} */
 
-.aside-body {
+/* .aside-body {
     overflow-y: auto;
     height: 100%;
     background: #fff
@@ -184,14 +195,14 @@ header {
 
 .btn-light:hover {
     background-color: #f0f0f0
-}
+} */
 
 /* .logo {
     display: inline-block;
     height: 36px
 } */
 
-.menu-wrap {
+/* .menu-wrap {
     padding: 0;
     margin-top: 30px
 }
@@ -332,9 +343,9 @@ mark {
     .menu-wrap.collapse {
         display:block
     }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
     .doc-title {
         font-size:32px;
         margin-bottom: 15px
@@ -403,7 +414,7 @@ mark {
         padding-top: 0;
         height: initial
     }
-}
+} */
 
 /* @media (max-width: 1500px) {
     .container {

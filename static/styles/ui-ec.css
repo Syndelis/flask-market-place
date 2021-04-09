@@ -18,9 +18,13 @@ a:hover {
 .img-wrap {
   text-align: center;
   display: block;
+  /* width: 500px;
+  height: 500px; */
 }
 .img-wrap img {
-  max-width: 100%;
+  /* max-width: 100%; */
+  width: 500px;
+  height: 500px;
 }
 
 .icon-wrap {
@@ -861,7 +865,7 @@ a[class*=card]:hover .title {
 }
 .card-product-grid .img-wrap {
   border-radius: 0.2rem 0.2rem 0 0;
-  height: 220px;
+  height: 200px;
 }
 .card-product-grid .info-wrap {
   overflow: hidden;
