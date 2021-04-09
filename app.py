@@ -15,10 +15,21 @@ conn = sql.connect(
 cursor = conn.cursor()
 amnt = 4
 
+def getCart():
+
+	cursor.execute(f"""
+		SELECT SUM(qtd) FROM POSSUI_NO_CARRINHO
+		WHERE cid={session['logged']};
+	""")
+
+	return cursor.fetchall()[0][0] or 0
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
 	# TODO: um botão só
+
 	if request.method == 'POST':
 
 		query = request.form.get('search')
@@ -62,10 +73,12 @@ def index():
 
 	return render_template(
 		'index.html',
-		data=cursor.fetchall()
+		data=cursor.fetchall(),
+		on_cart=getCart()
 	)
 
-@app.route('/add-to-car', methods=['POST'])
+
+@app.route('/add-to-cart', methods=['POST'])
 def addToCar():
 
 	d = loads(request.get_data())
@@ -79,7 +92,9 @@ def addToCar():
 		ON DUPLICATE KEY UPDATE qtd=qtd+{qtd};
 	""")
 
-	return Response('{"a": "true"')
+	conn.commit()
+
+	return Response(f"{getCart()}")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -129,11 +144,9 @@ def produto(pid: int):
 	""")
 	vendedor = cursor.fetchall()[0][0]
 
-	print(produto, fotos, vendedor)
-
 	return render_template(
-		'produto.html', produto=produto[2:],
-		fotos=fotos, vendedor=vendedor
+		'produto.html', produto=produto[2:], pid=produto[0],
+		fotos=fotos, vendedor=vendedor, on_cart=getCart()
 	)
 
 

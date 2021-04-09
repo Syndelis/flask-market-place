@@ -40,7 +40,7 @@
 				<div class="icon"><i class="fa fa-lg fa-shopping-cart"></i></div>
 				<div class="text">
 					<small class="text-muted">Carrinho</small> <br>
-					<span>3 items</span>
+					<span id="cart-amnt">{{on_cart}} itens</span>
 				</div>
 			</a>
 			<div class="navbar-dropdown">
@@ -76,6 +76,7 @@
 
 	<script src={{ url_for("static", filename="js/jquery-2.0.0.min.js") }} type="text/javascript"></script>
 	<script src={{ url_for("static", filename="js/bootstrap.bundle-ec.min.js") }} type="text/javascript"></script>
+	<script src={{ url_for("static", filename="js/commonquery.js") }} type="text/javascript"></script>
 
 	{% block script %}
 	{% endblock script %}

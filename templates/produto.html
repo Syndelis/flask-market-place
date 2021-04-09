@@ -49,17 +49,17 @@
                             <label>Quantidade</label>
                             <div class="input-group mb-3 input-spinner">
                             <div class="input-group-prepend">
-                                <button class="btn btn-light" type="button" id="button-plus"> + </button>
+                                <button class="btn btn-light" type="button" id="button-plus" onclick="DSPL.value++"> + </button>
                             </div>
-                            <input type="text" class="form-control" value="1">
+                            <input type="text" class="form-control" id="button-display" value="1">
                             <div class="input-group-append">
-                                <button class="btn btn-light" type="button" id="button-minus"> − </button>
+                                <button class="btn btn-light" type="button" id="button-minus" onclick="DSPL.value--;"> − </button>
                             </div>
                             </div>
                         </div>
                     </div>
                     <a href="#" class="btn  btn-primary"> Buy now </a>
-                    <a href="#" class="btn  btn-outline-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+                    <a href="#" class="btn  btn-outline-primary" value="{{pid}}"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
             </article>
 		</main>
 	</div>

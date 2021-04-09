@@ -8,21 +8,6 @@ const PU = document.getElementById("Preço+");
 const PD = document.getElementById("Preço-");
 
 $(document).ready(function() {
-	// jQuery code
-
-
-    /* ///////////////////////////////////////
-
-    THESE FOLLOWING SCRIPTS ONLY FOR BASIC USAGE, 
-    For sliders, interactions and other
-
-    */ ///////////////////////////////////////
-    
-
-	//////////////////////// Prevent closing from click inside dropdown
-    $(document).on('click', '.dropdown-menu', function (e) {
-      e.stopPropagation();
-    });
 
     $(document).on('click', '.smart-checkbox', function (e) {
 
@@ -36,57 +21,17 @@ $(document).ready(function() {
         }
     });
 
-
     $(document).on('click', '.btn-outline-primary', function (e) {
 
-        console.log($(this).attr("value"));
         $.ajax({
-            url: '/add-to-car',
+            url: '/add-to-cart',
             type: 'POST',
-            data: "{'qtd': 1, 'pid': " + $(this).attr("value") + "}", 
-            success: function (response) { console.log("Yay a response"); }
+            data: '{"qtd": "1", "pid": "' + $(this).attr("value") + '"}', 
+            success: function (response) {
+                CART.innerHTML = "" + response + " itens";
+            }
         });
 
     });
 
-
-    $('.js-check :radio').change(function () {
-        var check_attr_name = $(this).attr('name');
-        if ($(this).is(':checked')) {
-            $('input[name='+ check_attr_name +']').closest('.js-check').removeClass('active');
-            $(this).closest('.js-check').addClass('active');
-           // item.find('.radio').find('span').text('Add');
-
-        } else {
-            item.removeClass('active');
-            // item.find('.radio').find('span').text('Unselect');
-        }
-    });
-
-
-    // $('.js-check :checkbox').change(function () {
-    //     console.log('here!')
-    //     var check_attr_name = $(this).attr('name');
-    //     if ($(this).is(':checked')) {
-    //         $(this).closest('.js-check').addClass('active');
-    //        // item.find('.radio').find('span').text('Add');
-    //     } else {
-    //         $(this).closest('.js-check').removeClass('active');
-    //         // item.find('.radio').find('span').text('Unselect');
-    //     }
-    // });
-
-
-
-	//////////////////////// Bootstrap tooltip
-	if($('[data-toggle="tooltip"]').length>0) {  // check if element exists
-		$('[data-toggle="tooltip"]').tooltip()
-	} // end if
-
-
-
-
-    
-}); 
-// jquery end
-
+});

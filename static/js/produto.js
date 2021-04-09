@@ -2,13 +2,10 @@
 
 // jquery ready start
 
+const DSPL = document.getElementById("button-display");
 const CAPA = document.getElementById("capa");
 
 $(document).ready(function() {
-
-    $(document).on('click', '.dropdown-menu', function (e) {
-      e.stopPropagation();
-    });
 
     $(document).on('click', '.image-preview', function (e) {
         // console.log($(this).attr("id"));
@@ -18,9 +15,18 @@ $(document).ready(function() {
         CAPA.src = $(this).children()[0].src;
     });
 
-	if($('[data-toggle="tooltip"]').length>0) {  // check if element exists
-		$('[data-toggle="tooltip"]').tooltip()
-	} // end if
+    $(document).on('click', '.btn-outline-primary', function (e) {
+
+        $.ajax({
+            url: '/add-to-cart',
+            type: 'POST',
+            data: '{"qtd": "' + DSPL.value + '", "pid": "' + $(this).attr("value") + '"}', 
+            success: function (response) {
+                CART.innerHTML = "" + response + " itens";
+            }
+        });
+
+    });
 
 }); 
 // jquery end
