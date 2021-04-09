@@ -67,7 +67,7 @@
 								<div class="input-group">
 									<input type="text" name="search" class="form-control" placeholder="Search" value={{ request.form.search }}>
 									<div class="input-group-append">
-										<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+										<button class="btn btn-primary" type="submit" name="search-form" value="1"><i class="fa fa-search"></i></button>
 									</div>
 								</div>
 							</form>		
@@ -78,40 +78,30 @@
 					<header class="card-header">
 						<a href="#" data-toggle="collapse" data-target="#collapse_aside2" aria-expanded="true" class="">
 							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Preço </h6>
+							<h6 class="title">Filtro </h6>
 						</a>
 					</header>
 					<div class="filter-content collapse show" id="collapse_aside2" style="">
-						<div class="card-body">
+						<form action="" class="card-body" method="POST">
 							<div class="form-row">
-							<div class="form-group col-md-6">
-							<label>Min</label>
-							<input class="form-control" placeholder="$0" type="number">
-							</div>
-							<div class="form-group text-right col-md-6">
-							<label>Max</label>
-							<input class="form-control" placeholder="$1,0000" type="number">
-							</div>
+								<div class="form-group col-md-6">
+									<label>Min</label>
+									<input class="form-control" placeholder="R$ 0" type="number" name="min">
+								</div>
+								<div class="form-group text-right col-md-6">
+									<label>Max</label>
+									<input class="form-control" placeholder="R$ 1,0000" type="number" name="max">
+								</div>
 							</div> <!-- form-row.// -->
-							<button class="btn btn-block btn-primary">Apply</button>
-						</div> <!-- card-body.// -->
-					</div>
-				</article> <!-- filter-group  .// -->
-				<article class="filter-group">
-					<header class="card-header">
-						<a href="#" data-toggle="collapse" data-target="#collapse_aside3">
-							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Ordenação </h6>
-						</a>
-					</header>
-					<div class="filter-content collapse show" id="collapse_aside3">
-						<div class="card-body">
-							{{ chk.SmartCheckbox("A-Z") }}
-							{{ chk.SmartCheckbox("Z-A") }}
-							{{ chk.SmartCheckbox("Preço+") }}
-							{{ chk.SmartCheckbox("Preço-") }}
-							{{ chk.SmartCheckbox("Vendas") }}
-						</div> <!-- card-body.// -->
+							<div class="card-body">
+								{{ chk.SmartCheckbox("A-Z") }}
+								{{ chk.SmartCheckbox("Z-A") }}
+								{{ chk.SmartCheckbox("Preço+") }}
+								{{ chk.SmartCheckbox("Preço-") }}
+								{{ chk.SmartCheckbox("Vendas") }}
+							</div> <!-- card-body.// -->
+							<button class="btn btn-block btn-primary" type="submit">Apply</button>
+						</form> <!-- card-body.// -->
 					</div>
 				</article> <!-- filter-group  .// -->
 			</div> <!-- card.// -->

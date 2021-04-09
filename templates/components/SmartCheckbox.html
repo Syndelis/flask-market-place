@@ -1,6 +1,6 @@
-{% macro SmartCheckbox(name) -%}
+{% macro SmartCheckbox(name, value="off") -%}
 <label class="checkbox-btn">
-    <input class="smart-checkbox" type="checkbox" id="{{name}}">
+    <input class="smart-checkbox" type="checkbox" id="{{name}}" name="{{name}}">
     <span class="btn btn-light"> {{name}} </span>
 </label>
 {%- endmacro %}

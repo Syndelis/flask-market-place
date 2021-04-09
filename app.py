@@ -16,15 +16,45 @@ amnt = 4
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
-	if request.method == 'POST' and (query := request.form['search']):
+	# TODO: um botão só
+	if request.method == 'POST':
+
+		query = request.form.get('search')
+		query_str = f"MATCH (nome) AGAINST "\
+					f"('{query}' IN NATURAL LANGUAGE MODE)" if query else (session['last_query'] if not request.form.get('search-form') else "")
+
+		session['last_query'] = query_str
+
+		filter_names = {
+			"Vendas": "vendas DESC",
+			"A-Z": "nome ASC",
+			"Z-A": "nome DESC",
+			"Preço+": "valor ASC",
+			"Preço-": "valor DESC"
+		}
+		filter_str = ", ".join(
+			code
+			for el, code in filter_names.items()
+			if request.form.get(el) == 'on'
+		)
+
+		min = request.form.get("min")
+		max = request.form.get("max")
+
+		between_str = f"valor BETWEEN {min} AND {max}" if min and max else ""
+		
+		where_clause = "WHERE " + (
+			"AND ".join(s for s in (query_str, between_str) if s)
+		) if (query_str or between_str) else ""
+
+		filter_str = f"ORDER BY {filter_str}" if filter_str else ""
 
 		cursor.execute(f"""
-			SELECT * FROM PRODUTO
-			WHERE MATCH (nome)
-			AGAINST ('{query}' IN NATURAL LANGUAGE MODE);
+			SELECT * FROM PRODUTO {where_clause} {filter_str};
 		""")
 
 	else:
+		session['last_query'] = ''
 		cursor.execute("SELECT * FROM PRODUTO;")
 
 	return render_template(
