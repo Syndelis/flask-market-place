@@ -13,6 +13,8 @@
 	<link href="static/styles/style-ec.css" rel="stylesheet">
 
 	{% import 'components/Product.html' as prod %}
+	{% import 'components/SmartCheckbox.html' as chk %}
+
 </head>
 
 <header>
@@ -56,7 +58,7 @@
 					<header class="card-header">
 						<a href="#" data-toggle="collapse" data-target="#collapse_aside1" aria-expanded="true" class="">
 							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Categories </h6>
+							<h6 class="title">Busca </h6>
 						</a>
 					</header>
 					<div class="filter-content collapse show" id="collapse_aside1" style="">
@@ -68,15 +70,7 @@
 										<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
 									</div>
 								</div>
-							</form>
-							<ul class="list-menu">
-								<li><a href="#">Electronics </a></li>
-								<li><a href="#">Watches  </a></li>
-								<li><a href="#">Cinema </a></li>
-								<li><a href="#">Clothes </a></li>
-								<li><a href="#">Home items </a></li>
-							</ul>
-			
+							</form>		
 						</div> <!-- card-body.// -->
 					</div>
 				</article> <!-- filter-group  .// -->
@@ -84,12 +78,11 @@
 					<header class="card-header">
 						<a href="#" data-toggle="collapse" data-target="#collapse_aside2" aria-expanded="true" class="">
 							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Price </h6>
+							<h6 class="title">Preço </h6>
 						</a>
 					</header>
 					<div class="filter-content collapse show" id="collapse_aside2" style="">
 						<div class="card-body">
-							<input type="range" class="custom-range" min="0" max="100" name="">
 							<div class="form-row">
 							<div class="form-group col-md-6">
 							<label>Min</label>
@@ -108,61 +101,16 @@
 					<header class="card-header">
 						<a href="#" data-toggle="collapse" data-target="#collapse_aside3">
 							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Size </h6>
+							<h6 class="title">Ordenação </h6>
 						</a>
 					</header>
 					<div class="filter-content collapse show" id="collapse_aside3">
 						<div class="card-body">
-							<label class="checkbox-btn">
-								<input type="checkbox">
-								<span class="btn btn-light"> XS </span>
-							</label>
-			
-							<label class="checkbox-btn">
-								<input type="checkbox">
-								<span class="btn btn-light"> SM </span>
-							</label>
-			
-							<label class="checkbox-btn">
-								<input type="checkbox">
-								<span class="btn btn-light"> LG </span>
-							</label>
-			
-							<label class="checkbox-btn">
-								<input type="checkbox">
-								<span class="btn btn-light"> XXL </span>
-							</label>
-						</div> <!-- card-body.// -->
-					</div>
-				</article> <!-- filter-group  .// -->
-				<article class="filter-group">
-					<header class="card-header">
-						<a href="#" data-toggle="collapse" data-target="#collapse_aside4">
-							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Rating </h6>
-						</a>
-					</header>
-					<div class="filter-content collapse" id="collapse_aside4">
-						<div class="card-body">
-						<label class="custom-control custom-checkbox">
-						<input type="checkbox" checked="" class="custom-control-input">
-						<div class="custom-control-label">Best  </div>
-						</label>
-			
-						<label class="custom-control custom-checkbox">
-						<input type="checkbox" checked="" class="custom-control-input">
-						<div class="custom-control-label">Good </div>
-						</label>
-			
-						<label class="custom-control custom-checkbox">
-						<input type="checkbox" checked="" class="custom-control-input">
-						<div class="custom-control-label">Normal</div>
-						</label>
-			
-						<label class="custom-control custom-checkbox">
-						<input type="checkbox" checked="" class="custom-control-input">
-						<div class="custom-control-label">Not good</div>
-						</label>
+							{{ chk.SmartCheckbox("A-Z") }}
+							{{ chk.SmartCheckbox("Z-A") }}
+							{{ chk.SmartCheckbox("Preço+") }}
+							{{ chk.SmartCheckbox("Preço-") }}
+							{{ chk.SmartCheckbox("Vendas") }}
 						</div> <!-- card-body.// -->
 					</div>
 				</article> <!-- filter-group  .// -->
