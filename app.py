@@ -9,10 +9,18 @@ conn = sql.connect(
 )
 
 cursor = conn.cursor()
+amnt = 4
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+
+	cursor.execute("SELECT * FROM PRODUTO;")
+	unf = cursor.fetchall()
+
+	return render_template(
+		'index.html',
+		data=[unf[i:i+amnt+1] for i in range(0, len(unf), amnt)]
+	)
 
 
 @app.route('/login', methods=['GET', 'POST'])
