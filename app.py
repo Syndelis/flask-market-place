@@ -1,7 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 import MySQLdb as sql
 
 app = Flask(__name__)
+app.secret_key = 'tpzin fi'
+
 conn = sql.connect(
 	'alexandrum.go.ro',
 	'tpbd', 'lcrocha',
@@ -11,10 +13,19 @@ conn = sql.connect(
 cursor = conn.cursor()
 amnt = 4
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
 
-	cursor.execute("SELECT * FROM PRODUTO;")
+	if request.method == 'POST' and (query := request.form['search']):
+
+		cursor.execute(f"""
+			SELECT * FROM PRODUTO
+			WHERE MATCH (nome)
+			AGAINST ('{query}' IN NATURAL LANGUAGE MODE);
+		""")
+
+	else:
+		cursor.execute("SELECT * FROM PRODUTO;")
 
 	return render_template(
 		'index.html',
@@ -29,9 +40,11 @@ def login():
 
 		name, pswd = request.form['username'], request.form['password']
 
-		cursor.execute("SELECT nome, senha FROM PESSOA WHERE tipo=1;")
+		cursor.execute("SELECT uid, nome, senha FROM PESSOA WHERE tipo=1;")
 		for row in cursor.fetchall():
-			if (name, pswd) == row: return redirect('/')
+			if (name, pswd) == row:
+				# session['logged'] = uid
+				return redirect('/')
 
 		error = 'Credenciais Inválidos!'
 

@@ -55,13 +55,13 @@
 					</header>
 					<div class="filter-content collapse show" id="collapse_aside1" style="">
 						<div class="card-body">
-							<form class="mb-3">
-							<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search">
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
-							</div>
-							</div>
+							<form action="" class="mb-3" method="POST">
+								<div class="input-group">
+									<input type="text" name="search" class="form-control" placeholder="Search" value={{ request.form.search }}>
+									<div class="input-group-append">
+										<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
 							</form>
 							<ul class="list-menu">
 								<li><a href="#">Electronics </a></li>
