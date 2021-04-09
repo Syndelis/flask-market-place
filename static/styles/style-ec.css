@@ -96,6 +96,37 @@ header {
     text-decoration: none;
 }
 
+.navbar-logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout {
+    width: 30px;
+    margin-top: 2px;
+    margin-left: 3px;
+    margin-right: 8px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #333333;
+}
+
+.logout-link {
+    margin-top: 5px;
+    margin-bottom: 3px;
+    margin-right: 15px;
+    margin-left: 3px;
+    text-decoration: none;
+    color: #000;
+}
+
+.logout-link:hover {
+    cursor: pointer;
+    color: rgb(32, 32, 32);
+    text-decoration: none;
+}
+
 body {
     background-color: #ddd;
 }
@@ -148,7 +179,7 @@ body {
 footer {
     display: flex;
     margin-top: 40px;
-    /* margin-bottom: 30px; */
+    margin-bottom: 30px;
     justify-content: center;
     background-color: #ddd;
 }
