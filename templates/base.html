@@ -8,7 +8,7 @@
     {% endblock head %}
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+
 	<link href={{ url_for("static", filename="styles/bootstrap-ec.css") }} rel="stylesheet" type="text/css">
 	<link href={{ url_for("static", filename="styles/ui-ec.css") }} rel="stylesheet" type="text/css">
 	<link href={{ url_for("static", filename="styles/responsive-ec.css") }} rel="stylesheet">
@@ -17,68 +17,57 @@
 
 </head>
 
-<header class="section-header">
-	<section class="header-main border-bottom">
-		<div class="container">
-	<div class="row align-items-center">
-		<div class="col-lg-3 col-4 col-sm-4">
-		<a href="/" class="navbar-logo">
-			<img class="logo" src={{ url_for('static', filename='img/logo2.png') }}>
-		</a> <!-- brand-wrap.// -->
+<header>
+	<div class="navbar">
+		<div class="navbar-left">
+			<a href="/" class="navbar-logo">
+				<img class="logo" src={{ url_for('static', filename='img/logo2.png') }}>
 		</div>
-		<div class="col-lg-6 col-sm-8 col-8">
+		<div class="navbar-middle">
 			<form action="#" class="search">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" class="form-control" placeholder="Buscar">
 					<div class="input-group-append">
 					  <button class="btn btn-primary" type="submit">
-						<i class="fa fa-search"></i>
+						<i class="fa fa-lg fa-search"></i>
 					  </button>
 					</div>
 				</div>
-			</form> <!-- search-wrap .end// -->
-		</div> <!-- col.// -->
-		<div class="col-lg-3 col-12 col-sm-12">
-			<div class="widgets-wrap d-flex justify-content-end">
-				<div class="widget-header">
-					<a href="#" class="icontext">
-						<div class="icon"><i class="fa fa-lg fa-shopping-cart"></i></div>
-						<div class="text">
-							<small class="text-muted">Basket</small> <br>
-							<span>3 items</span>
+			</form>
+		</div>
+		<div class="navbar-right">
+			<a href="#" class="icontext">
+				<div class="icon"><i class="fa fa-lg fa-shopping-cart"></i></div>
+				<div class="text">
+					<small class="text-muted">Carrinho</small> <br>
+					<span>3 items</span>
+				</div>
+			</a>
+			<div class="navbar-dropdown">
+				<a href="#" class="ml-3 icontext" data-toggle="dropdown" data-offset="20,10" aria-expanded="false">
+					<div class="icon"><i class="fa fa-lg fa-user-circle"></i></div>
+					<div class="text"> 
+						<small class="text-muted">Fazer login / Crie sua conta</small> <br>
+						<span>Minha conta <i class="fa fa-caret-down"></i></span>
+					</div>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 20px; left: 1440px; transform: translate3d(140px, 46px, 0px);">
+					<form class="px-4 py-3">
+						<div class="form-group">
+						  <label>E-mail</label>
+						  <input type="email" class="form-control" placeholder="email@exemplo.com">
 						</div>
-					</a>
-				</div> <!-- widget .// -->
-				<div class="widget-header dropdown">
-					<a href="#" class="ml-3 icontext" data-toggle="dropdown" data-offset="20,10" aria-expanded="false">
-						<div class="icon"><i class="fa fa-lg fa-user-circle"></i></div>
-						<div class="text"> 
-							<small class="text-muted">Sign In / Join</small> <br>
-							<span>My account <i class="fa fa-caret-down"></i></span>
+						<div class="form-group">
+						  <label>Senha</label>
+						  <input type="password" class="form-control" placeholder="Senha">
 						</div>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(140px, 46px, 0px);">
-						<form class="px-4 py-3">
-							<div class="form-group">
-							  <label>Email address</label>
-							  <input type="email" class="form-control" placeholder="email@example.com">
-							</div>
-							<div class="form-group">
-							  <label>Password</label>
-							  <input type="password" class="form-control" placeholder="Password">
-							</div>
-							<button type="submit" class="btn btn-primary">Sign in</button>
-							</form>
-							<hr class="dropdown-divider">
-							<a class="dropdown-item" href="#">Have account? Sign up</a>
-							<a class="dropdown-item" href="#">Forgot password?</a>
-					</div> <!--  dropdown-menu .// -->
-				</div> <!-- widget  dropdown.// -->
-			</div>	<!-- widgets-wrap.// -->	
-		</div> <!-- col.// -->
-	</div> <!-- row.// -->
-		</div> <!-- container.// -->
-	</section> <!-- header-main .// -->
+						<button type="submit" class="btn btn-primary">Criar conta</button>
+						</form>
+						<hr class="dropdown-divider">
+						<a class="dropdown-item" href="#">Já tem uma conta? Fazer login</a>
+				</div> <!--  dropdown-menu .// -->
+			</div>
+		</div>	
 </header>
 
 <body>

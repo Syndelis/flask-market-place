@@ -24,7 +24,7 @@
 					<div class="filter-content collapse show" id="collapse_aside2" style="">
 						<form action="" class="card-body" method="POST">
 							<div class="input-group">
-								<input type="text" name="search" class="form-control" placeholder="Search" value={{ request.form.search }}>
+								<input type="text" name="search" class="form-control" placeholder="Buscar" value={{ request.form.search }}>
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="submit" name="search-form" value="1"><i class="fa fa-search"></i></button>
 								</div>
@@ -47,7 +47,7 @@
 								{{ chk.SmartCheckbox("Preço-", request.form.get('Preço-')) }}
 								{{ chk.SmartCheckbox("Vendas", request.form.get('Vendas')) }}
 							</div> <!-- card-body.// -->
-							<button class="btn btn-block btn-primary" type="submit">Apply</button>
+							<button class="btn btn-block btn-primary" type="submit">Aplicar</button>
 						</form> <!-- card-body.// -->
 					</div>
 				</article> <!-- filter-group  .// -->

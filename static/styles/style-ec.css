@@ -149,11 +149,12 @@ body {
 }
 
 .sidebar {
+    /* min-width: 350px; */
     max-width: 20%;
     margin-top: 30px;
     margin-left: 100px;
     margin-right: 80px;
-    /* position: fixed; */
+    position: sticky;
 }
 
 .products-container {
@@ -595,6 +596,7 @@ mark {
     font-size: 15px;
     padding: 13px 30px
 }
+
 
 .card-template {
     margin-bottom: 30px;
