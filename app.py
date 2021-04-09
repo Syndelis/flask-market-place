@@ -21,9 +21,7 @@ def index():
 
 		query = request.form.get('search')
 		query_str = f"MATCH (nome) AGAINST "\
-					f"('{query}' IN NATURAL LANGUAGE MODE)" if query else (session['last_query'] if not request.form.get('search-form') else "")
-
-		session['last_query'] = query_str
+					f"('{query}' IN NATURAL LANGUAGE MODE)" if query else ""
 
 		filter_names = {
 			"Vendas": "vendas DESC",
@@ -53,11 +51,11 @@ def index():
 			SELECT * FROM PRODUTO {where_clause} {filter_str};
 		""")
 
-	elif session.get('logged') is None:
-		return redirect('/login')
+	# Só pro produto final
+	# elif session.get('logged') is None:
+	# 	return redirect('/login')
 
 	else:
-		session['last_query'] = ''
 		cursor.execute("SELECT * FROM PRODUTO;")
 
 	return render_template(
