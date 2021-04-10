@@ -1,86 +1,68 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Page Test</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="static/styles/bootstrap-ec.css" rel="stylesheet" type="text/css">
-    <link href="static/styles/ui-ec.css" rel="stylesheet" type="text/css">
-    <link href="static/styles/responsive-ec.css" rel="stylesheet">
-    <link href="static/styles/all-ec.min.css" rel="stylesheet">
-    <link href="static/styles/style-ec.css" rel="stylesheet">
-</head>
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+{% endblock head %}
 
-<body>
+{% block body %}
 
-    <article class="card-body">
-        <header class="mb-4">
-            <h4 class="card-title">Sign up</h4>
-        </header>
+<div style="display: none;" id="hidden-content">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Feedback</h4>
         <form>
-            <div class="form-row">
-                <div class="col form-group">
-                    <label>First name</label>
-                      <input type="text" class="form-control" placeholder="">
-                </div> <!-- form-group end.// -->
-                <div class="col form-group">
-                    <label>Last name</label>
-                      <input type="text" class="form-control" placeholder="">
-                </div> <!-- form-group end.// -->
-            </div> <!-- form-row end.// -->
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" placeholder="">
-                <small class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div> <!-- form-group end.// -->
-            <div class="form-group">
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input class="custom-control-input" checked="" type="radio" name="gender" value="option1">
-                  <span class="custom-control-label"> Male </span>
-                </label>
-                <label class="custom-control custom-radio custom-control-inline">
-                  <input class="custom-control-input" type="radio" name="gender" value="option2">
-                  <span class="custom-control-label"> Female </span>
-                </label>
-            </div> <!-- form-group end.// -->
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>City</label>
-                  <input type="text" class="form-control">
-                </div> <!-- form-group end.// -->
-                <div class="form-group col-md-6">
-                  <label>Country</label>
-                  <select id="inputState" class="form-control">
-                    <option> Choose...</option>
-                      <option>Uzbekistan</option>
-                      <option>Russia</option>
-                      <option selected="">United States</option>
-                      <option>India</option>
-                      <option>Afganistan</option>
-                  </select>
-                </div> <!-- form-group end.// -->
-            </div> <!-- form-row.// -->
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label>Create password</label>
-                    <input class="form-control" type="password">
-                </div> <!-- form-group end.// --> 
-                <div class="form-group col-md-6">
-                    <label>Repeat password</label>
-                    <input class="form-control" type="password">
-                </div> <!-- form-group end.// -->  
-            </div>
-            <div class="form-group mt-3">
-                <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-            </div> <!-- form-group// -->      
-            <p class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our Terms of use and Privacy Policy.</p>                                          
+          <div class="form-row">
+              <div class="col form-group">
+                  <label>Name</label>
+                    <input type="text" class="form-control" placeholder="">
+              </div> <!-- form-group end.// -->
+              <div class="col form-group">
+                  <label>Email</label>
+                    <input type="email" class="form-control" placeholder="">
+              </div> <!-- form-group end.// -->
+          </div> <!-- form-row.// -->
+          <div class="form-group">
+              <label>What is message about?</label>
+              <select class="form-control">
+                  <option>Select</option>
+                  <option>Technical issue</option>
+                  <option>Money refund</option>
+                  <option>Recommendation</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label>What is message about?</label>
+              <textarea class="form-control" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="exampleFormControlFile1">
+                  <input type="file" class="form-control-file" multiple>
+              </label>
+          </div>
+          <button class="btn btn-primary btn-block">Send</button>
         </form>
-        <hr>
-        <p class="text-center">Have an account? <a href="">Log In</a></p>
-        </article>
+        </div>
+</div>
 
-</body>
+<a class="fancybox" data-fancybox="gallery" href="/static/img/brenno.png"><img src="/static/img/brenno.png"></a>
+<a class="fancybox" data-fancybox="gallery" href="/static/img/logo2.png"><img src="/static/img/logo2.png"></a>
 
-</html>
+<a class="fancybox" data-fancybox data-src="#hidden-content" href="javascript:;">
+    Trigger the fancy box
+</a>
+
+<a class="fancybox" data-fancybox data-type="iframe" data-src="/produto/0" href="javascript:;">
+	Test
+</a>
+
+{% endblock body %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<!-- https://fancyapps.com/fancybox/3/docs/#api -->
+
+<script type="text/javascript">
+$(".fancybox").fancybox({
+    "afterClose": function () { console.log("Heyy") }
+});
+</script>
+{% endblock script %}

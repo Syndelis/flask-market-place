@@ -19,7 +19,7 @@ def getCart():
 
 	cursor.execute(f"""
 		SELECT SUM(qtd) FROM POSSUI_NO_CARRINHO
-		WHERE cid={session['logged']};
+		WHERE cid={session.get('logged')};
 	""")
 
 	return cursor.fetchall()[0][0] or 0
@@ -84,7 +84,7 @@ def addToCar():
 	d = loads(request.get_data())
 	pid = int(d['pid'])
 	qtd = int(d['qtd'])
-	cid = session['logged']
+	cid = session.get('logged')
 
 	cursor.execute(f"""
 		INSERT INTO POSSUI_NO_CARRINHO
@@ -148,6 +148,39 @@ def produto(pid: int):
 		'produto.html', produto=produto[2:], pid=produto[0],
 		fotos=fotos, vendedor=vendedor, on_cart=getCart()
 	)
+
+
+@app.route('/carrinho', methods=['GET', 'POST'])
+def carrinho():
+
+	if request.method == 'POST':
+		
+		cursor.execute(f"""
+			DELETE FROM POSSUI_NO_CARRINHO
+			WHERE cid={session.get("logged")} AND pid={request.form.get("id")};
+		""")
+
+		conn.commit()
+
+
+	cursor.execute(f"""
+		SELECT PROD.pid, PROD.nome, PROD.capa, PROD.valor, PES.nome, C.qtd FROM PESSOA AS PES JOIN
+			PRODUTO AS PROD JOIN
+			(SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={session.get("logged")}) AS C
+			ON PROD.pid=C.pid
+		ON PES.uid=PROD.fid;
+	""")
+
+	return render_template(
+		'carrinho.html',
+		carrinho=cursor.fetchall(),
+		on_cart=getCart()
+	)
+
+
+@app.route('/test')
+def test():
+	return render_template('test.html', on_cart=getCart())
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-{% macro Product(title, img, price, pid) -%}
+{% macro onIndex(title, img, price, pid) -%}
 <div class="col-md-3">
     <figure class="card card-product-grid">
         <div class="img-wrap">
@@ -8,11 +8,52 @@
         <figcaption class="info-wrap">
             <a href="/produto/{{pid}}" class="title">{{title}}</a>
             <div class="mt-2">
-                <var class="price">R$ {{price}}</var> <!-- price-wrap.// -->
-                <!-- <a href="" class="btn btn-sm btn-outline-primary float-right">Comprar <i class="fa fa-shopping-cart"></i></a> -->
+                <var class="price">R$ {{price}}</var>
                 <button class="btn btn-sm btn-outline-primary float-right" value="{{pid}}">Comprar <i class="fa fa-shopping-cart"></i></button>
-            </div> <!-- action-wrap.end -->
+            </div>
         </figcaption>
-    </figure> <!-- card // -->
+    </figure>
 </div>
+{%- endmacro %}
+
+{% macro onCart(row) -%}
+<tr>
+	<td>
+		<figure class="itemside align-items-center">
+			<div class="aside">
+                <a href="/produto/{{row[0]}}">
+                    <img src="{{row[2]}}" class="img-sm">
+                </a>
+            </div>
+			<figcaption class="info">
+				<a href="/produto/{{row[0]}}" class="title text-dark"> {{row[1]}} </a>
+				<p class="text-muted small">Vendido por: {{row[4]}}</p>
+			</figcaption>
+		</figure>
+	</td>
+	<td> 
+		<div class="col"> 
+            <div class="input-group input-spinner">
+                <div class="input-group-prepend">
+                    <button class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-minus"></i> </button>
+                </div>
+                <input type="text" class="form-control" value="{{row[5]}}">
+                <div class="input-group-append">
+                    <button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-plus"></i> </button>
+                </div>
+            </div>
+        </div>
+	</td>
+	<td> 
+		<div class="price-wrap"> 
+			<var class="price">R$ {{row[3] * row[5]}}</var> 
+			<small class="text-muted"> R$ {{row[3]}} cada </small> 
+		</div>
+	</td>
+	<td class="text-right"> 
+        <form action="" class="col flex-grow-0 text-right" method="POST">
+            <button class="btn btn-light" type="submit" name="id" value="{{row[0]}}"> <i class="fa fa-times"></i> </button>
+        </form>
+	</td>
+</tr>
 {%- endmacro %}
