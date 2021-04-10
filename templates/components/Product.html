@@ -34,13 +34,13 @@
 	<td> 
 		<div class="col"> 
             <div class="input-group input-spinner">
-                <div class="input-group-prepend">
-                    <button class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-minus"></i> </button>
-                </div>
+                <form action="" method="POST" class="input-group-prepend">
+                    <button name="button-minus" class="btn btn-light" type="submit" id="button-minus" value="{{row[0]}}"> <i class="fa fa-minus"></i> </button>
+                </form>
                 <input type="text" class="form-control" value="{{row[5]}}">
-                <div class="input-group-append">
-                    <button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-plus"></i> </button>
-                </div>
+                <form action="" method="POST" class="input-group-append">
+                    <button name="button-plus" class="btn btn-light" type="submit" id="button-plus" value="{{row[0]}}"> <i class="fa fa-plus"></i> </button>
+                </form>
             </div>
         </div>
 	</td>
@@ -52,7 +52,7 @@
 	</td>
 	<td class="text-right"> 
         <form action="" class="col flex-grow-0 text-right" method="POST">
-            <button class="btn btn-light" type="submit" name="id" value="{{row[0]}}"> <i class="fa fa-times"></i> </button>
+            <button class="btn btn-light" type="submit" name="remove" value="{{row[0]}}"> <i class="fa fa-times"></i> </button>
         </form>
 	</td>
 </tr>

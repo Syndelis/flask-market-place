@@ -15,14 +15,20 @@ $(document).ready(function() {
         CAPA.src = $(this).children()[0].src;
     });
 
-    $(document).on('click', '.btn-outline-primary', function (e) {
+    $(document).on('click', '.btn-outline-primary, .btn-primary', function (e) {
+
+        const thisid = $(this).attr("id");
 
         $.ajax({
             url: '/add-to-cart',
             type: 'POST',
             data: '{"qtd": "' + DSPL.value + '", "pid": "' + $(this).attr("value") + '"}', 
             success: function (response) {
+
                 CART.innerHTML = "" + response + " itens";
+                if (thisid === "btn-buy")
+                    window.location.href = "/carrinho";
+
             }
         });
 

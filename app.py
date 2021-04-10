@@ -79,9 +79,9 @@ def index():
 
 
 @app.route('/add-to-cart', methods=['POST'])
-def addToCar():
+def addToCart(data=None):
 
-	d = loads(request.get_data())
+	d = data or loads(request.get_data())
 	pid = int(d['pid'])
 	qtd = int(d['qtd'])
 	cid = session.get('logged')
@@ -93,6 +93,14 @@ def addToCar():
 	""")
 
 	conn.commit()
+
+	if qtd < 0:
+		cursor.execute(f"""
+			DELETE FROM POSSUI_NO_CARRINHO
+			WHERE qtd<=0;
+		""")
+
+		conn.commit()
 
 	return Response(f"{getCart()}")
 
@@ -153,14 +161,53 @@ def produto(pid: int):
 @app.route('/carrinho', methods=['GET', 'POST'])
 def carrinho():
 
+	# Testar por botão × vs +-
 	if request.method == 'POST':
-		
-		cursor.execute(f"""
-			DELETE FROM POSSUI_NO_CARRINHO
-			WHERE cid={session.get("logged")} AND pid={request.form.get("id")};
-		""")
 
-		conn.commit()
+		if request.form.get("remove") is not None:
+		
+			cursor.execute(f"""
+				DELETE FROM POSSUI_NO_CARRINHO
+				WHERE cid={session.get("logged")} AND pid={request.form.get("remove")};
+			""")
+
+			conn.commit()
+
+		elif request.form.get("purchase"):
+			
+			cursor.execute(f"""
+				INSERT INTO HISTORICO
+				(SELECT C.pid, C.cid, P.fid, NOW(), C.qtd, C.qtd*P.valor AS total
+				FROM (SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={session.get("logged")}) AS C JOIN PRODUTO AS P
+				ON C.pid=P.pid);
+			""")
+
+			cursor.execute(f"""
+				DELETE FROM POSSUI_NO_CARRINHO
+				WHERE cid={session.get("logged")};
+			""")
+
+			conn.commit()
+
+			return redirect('/historico')
+
+		else:
+			
+			amnt = 1 if request.form.get("button-plus") is not None else -1
+			
+			cursor.execute(f"""
+				UPDATE POSSUI_NO_CARRINHO
+				SET qtd=qtd+({amnt})
+				WHERE cid={session.get("logged")} AND pid={request.form.get("button-plus") or request.form.get("button-minus")};
+			""")
+
+			conn.commit()
+
+			if amnt < 0:
+				cursor.execute(f"""
+					DELETE FROM POSSUI_NO_CARRINHO
+					WHERE qtd<=0;
+				""")
 
 
 	cursor.execute(f"""
@@ -171,9 +218,12 @@ def carrinho():
 		ON PES.uid=PROD.fid;
 	""")
 
+	data = cursor.fetchall()
+	total = sum(row[3]*row[5] for row in data)
+
 	return render_template(
 		'carrinho.html',
-		carrinho=cursor.fetchall(),
+		carrinho=data, total=total,
 		on_cart=getCart()
 	)
 
@@ -181,6 +231,11 @@ def carrinho():
 @app.route('/test')
 def test():
 	return render_template('test.html', on_cart=getCart())
+
+
+@app.route('/historico')
+def historico():
+	return render_template('historico.html', on_cart=getCart())
 
 
 if __name__ == '__main__':

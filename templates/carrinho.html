@@ -56,22 +56,24 @@
 <div class="card-body">
 		<dl class="dlist-align">
 		  <dt>Total price:</dt>
-		  <dd class="text-right">$69.97</dd>
+		  <dd class="text-right" id="cart-total">R$ {{total}}</dd>
 		</dl>
 		<dl class="dlist-align">
 		  <dt>Discount:</dt>
-		  <dd class="text-right text-danger">- $10.00</dd>
+		  <dd class="text-right text-danger">- R$ 10.00</dd>
 		</dl>
 		<dl class="dlist-align">
 		  <dt>Total:</dt>
-		  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+		  <dd class="text-right text-dark b" id="cart-discounted"><strong>R$ {{total-10}}</strong></dd>
 		</dl>
 		<hr>
 		<p class="text-center mb-3">
-			<img src="bootstrap-ecommerce-html/images/misc/payments.png" height="26">
+			<img src="/static/img/payments.png" height="26">
 		</p>
-		<a href="#" class="btn btn-primary btn-block"> Make Purchase </a>
-		<a href="#" class="btn btn-light btn-block">Continue Shopping</a>
+		<form action="" method="POST">
+			<button name="purchase" value="0" class="btn btn-primary btn-block" type="submit"> Make Purchase </button>
+		</form>
+		<a href="/" class="btn btn-light btn-block">Continue Shopping</a>
 </div> <!-- card-body.// -->
 </div> <!-- card.// -->
 
