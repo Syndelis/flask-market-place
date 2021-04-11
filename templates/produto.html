@@ -6,6 +6,7 @@
 
 {% block body %}
 
+<div class="card-provider">
 <div class="card">
 	<div class="row no-gutters">
 		<aside class="col-md-6">
@@ -27,7 +28,7 @@
                     <div class="rating-wrap my-3">
 	                    <small class="label-rating text-success">
                             <i class="fa fa-clipboard-check"></i>
-                            {{produto[2]}} orders
+                            {{produto[2]}} pedidos
                         </small>
                     </div>
 
@@ -60,11 +61,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="btn  btn-primary" id="btn-buy" value="{{pid}}"> Buy now </a>
-                    <a href="#" class="btn  btn-outline-primary" id="brn-cart" value="{{pid}}"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+                    <a href="#" class="btn  btn-primary" id="btn-buy" value="{{pid}}"> Comprar agora </a>
+                    <a href="#" class="btn  btn-outline-primary" id="brn-cart" value="{{pid}}"> <span class="text">Adicionar ao carrinho</span> <i class="fas fa-shopping-cart"></i>  </a>
             </article>
 		</main>
 	</div>
+</div>
 </div>
 
 {% endblock body %}

@@ -8,15 +8,16 @@
 
 {% import 'components/Product.html' as prod %}
 
+<div class="card-cart">
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
 <table class="table table-borderless table-shopping-cart">
 <thead class="text-muted">
 <tr class="small text-uppercase">
-  <th scope="col">Product</th>
-  <th scope="col" width="120">Quantity</th>
-  <th scope="col" width="120">Price</th>
+  <th scope="col">Produto</th>
+  <th scope="col" width="120">Quantidade</th>
+  <th scope="col" width="120">Preço</th>
   <th scope="col" class="text-right" width="200"> </th>
 </tr>
 </thead>
@@ -27,8 +28,9 @@
 </tbody>
 </table>
 
+
 <div class="card-body border-top">
-	<p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+	<p class="icontext"><i class="icon text-success fa fa-truck"></i> Entrega grátis entre 1-2 semanas</p>
 </div> <!-- card-body.// -->
 
 </div> <!-- card.// -->
@@ -40,11 +42,11 @@
 <div class="card-body">
 <form>
 	<div class="form-group">
-		<label>Have coupon?</label>
+		<label>Tem um cupom?</label>
 		<div class="input-group">
-			<input type="text" class="form-control" name="" placeholder="Coupon code">
+			<input type="text" class="form-control" name="" placeholder="Código do cupom">
 			<span class="input-group-append"> 
-				<button class="btn btn-primary">Apply</button>
+				<button class="btn btn-primary">Aplicar</button>
 			</span>
 		</div>
 	</div>
@@ -55,11 +57,11 @@
 <div class="card">
 <div class="card-body">
 		<dl class="dlist-align">
-		  <dt>Total price:</dt>
+		  <dt>Preço total:</dt>
 		  <dd class="text-right" id="cart-total">R$ {{total}}</dd>
 		</dl>
 		<dl class="dlist-align">
-		  <dt>Discount:</dt>
+		  <dt>Desconto:</dt>
 		  <dd class="text-right text-danger">- R$ 10.00</dd>
 		</dl>
 		<dl class="dlist-align">
@@ -71,15 +73,16 @@
 			<img src="/static/img/payments.png" height="26">
 		</p>
 		<form action="" method="POST">
-			<button name="purchase" value="0" class="btn btn-primary btn-block" type="submit"> Make Purchase </button>
+			<button name="purchase" value="0" class="btn btn-primary btn-block" type="submit"> Finalizar compra </button>
 		</form>
-		<a href="/" class="btn btn-light btn-block">Continue Shopping</a>
+		<a href="/" class="btn btn-light btn-block">Continuar comprando</a>
 </div> <!-- card-body.// -->
 </div> <!-- card.// -->
 
 	</aside> <!-- col.// -->
 
 
+</div>
 </div>
 {% endblock body %}
 

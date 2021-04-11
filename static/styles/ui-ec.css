@@ -224,6 +224,16 @@ figure {
   height: 2.875rem;
 }
 
+.card-provider {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.card-cart {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
 /* all clearfix */
 article:after,
 .form-group:after {
