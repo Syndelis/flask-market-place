@@ -10,6 +10,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* background-color: #d6d6d6; */
 }
 
 header img{
