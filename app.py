@@ -1,10 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request, session, Response
 import MySQLdb as sql
 from json import loads
+from collections import defaultdict
+from werkzeug.utils import secure_filename
+from os.path import join
 
 app = Flask(__name__)
 app.secret_key = 'tpzin fi'
 app.config['SERVER_NAME'] = '127.0.0.1:5000'
+app.config['UPLOAD_FOLDER'] = "./static/img/user-content"
 
 conn = sql.connect(
 	'alexandrum.go.ro',
@@ -33,8 +37,9 @@ def index():
 	if request.method == 'POST':
 
 		query = request.form.get('search')
-		query_str = f"MATCH (nome) AGAINST "\
-					f"('{query}' IN NATURAL LANGUAGE MODE)" if query else ""
+		# query_str = f"MATCH (nome) AGAINST "\
+		# 			f"('{query}' IN NATURAL LANGUAGE MODE)" if query else ""
+		query_str = f"nome LIKE '%{query}%'" if query else ""
 
 		filter_names = {
 			"Vendas": "vendas DESC",
@@ -256,8 +261,33 @@ def historico():
 	)
 
 
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
+
+	if request.method == 'POST':
+
+		if (id := request.form.get("id")) is not None:
+
+			cursor.execute(f"""
+				DELETE FROM PESSOA
+				WHERE uid={id};
+			""")
+
+		else:
+			
+			cursor.execute("SELECT MAX(uid) FROM PESSOA;")
+			n = cursor.fetchall()[0][0] + 1
+
+			cursor.execute(f"""
+				INSERT INTO PESSOA
+				VALUES (
+					{n},"{request.form.get("nome")}","{request.form.get("email")}",
+					"{request.form.get("senha")}", 1
+				);
+			""") 
+
+		conn.commit()
+
 
 	cursor.execute(f"""
 		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, C.nome
@@ -271,11 +301,88 @@ def admin():
 
 	data = cursor.fetchall()
 
+	cursor.execute(f"""
+		SELECT uid, nome, email
+		FROM PESSOA
+		WHERE tipo=1;
+	""")
+
+	sellers = cursor.fetchall()
+
 	return render_template(
-		'historico.html', on_cart=getCart(),
+		'admin.html', on_cart=getCart(),
 		data=data, consumer=False,
-		total=sum(row[4] for row in data)
+		total=sum(row[4] for row in data),
+		sellers=sellers
 	)
+
+
+@app.route("/fornecedor", methods=['GET', 'POST'])
+def fornecedor():
+
+	fid = session.get("logged")
+	if request.method == 'POST':
+
+		name = request.form.get("name")
+		description = request.form.get("description")
+		value = request.form.get("value")
+		qtd = request.form.get("qtd")
+
+		pid = request.form.get("id")
+
+		cursor.execute(f"""
+			UPDATE PRODUTO AS P
+			SET P.nome="{name}", P.descricao="{description}", P.valor={value}, P.qtd={qtd}
+			WHERE pid={pid} AND fid={fid};
+		""")
+
+		if (files := request.files.getlist('files')):
+
+			urls = []
+
+			for file in files:
+				filename = secure_filename(file.filename)
+				urls.append(join(app.config['UPLOAD_FOLDER'], filename))
+				file.save(urls[-1])
+
+			cursor.execute(f"""
+				INSERT INTO FOTO
+				VALUES {", ".join(f'({pid}, "{url[1:]}")' for url in urls)};
+			""")
+
+		conn.commit()
+
+	cursor.execute(f"""
+		SELECT * FROM PRODUTO WHERE fid={fid};
+	""")
+
+	data = cursor.fetchall()
+
+	cursor.execute(f"""
+		SELECT P.pid, url FROM (SELECT pid FROM PRODUTO WHERE fid={fid}) AS P
+		JOIN FOTO ON P.pid=FOTO.pid;
+	""")
+
+	d = defaultdict(list)
+	for id, url in cursor.fetchall(): d[id].append(url)
+
+	return render_template(
+		'fornecedor.html', on_cart=getCart(), data=data, images=d)
+
+
+@app.route("/remove-image", methods=['POST'])
+def removeImage():
+
+	d = request.get_data().decode('utf-8')
+
+	cursor.execute(f"""
+		DELETE FROM FOTO
+		WHERE url="{d}";
+	""")
+
+	conn.commit()
+
+	return Response('true')
 
 
 if __name__ == '__main__':

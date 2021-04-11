@@ -1,0 +1,72 @@
+{% extends "historico.html" %}
+
+{% block head %}
+<title>Painel do Administrador</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+{% endblock head %}
+
+{% block beforeHistory %}
+
+<div style="display: none;" id="hidden-content">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Novo Fornecedor</h4>
+        <form method="POST" action="">
+            <div class="form-row">
+                <div class="col form-group">
+                    <label>Nome</label>
+                    <input name="nome" type="text" class="form-control" placeholder="">
+                </div>
+                <div class="col form-group">
+                    <label>Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input name="senha" type="text" class="form-control" placeholder="">
+            </div>
+            <button class="btn btn-primary btn-block">Adicionar</button>
+        </form>
+    </div>
+</div>
+
+<article class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Fornecedores Cadastrados</h3>
+            </div>
+        </div>
+
+    </div>
+</article>
+
+{% for seller in sellers %}
+<div class="row">
+
+    <div class="icontext align-items-start mr-4" style="max-width: 300px;">
+        <span class="icon icon-md rounded-circle border border-primary">
+            <i class="fa fa-user text-primary"></i>
+        </span>
+        <div class="text">
+            <h6 class="title">{{seller[1]}}</h6>
+            <p class="text-muted">{{seller[2]}}</p>
+        </div>
+    </div>
+
+    <form action="" class="col flex-grow-0 text-right" method="POST">
+        <button class="btn btn-light" type="submit" name="id" value="{{seller[0]}}"> <i class="fa fa-times"></i> </button>
+    </form>
+</div>
+{% endfor %}
+
+<a class="fancybox btn btn-primary" data-fancybox data-src="#hidden-content" href="javascript:;">
+    Cadastrar novo
+</a>
+
+{% endblock beforeHistory %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{% endblock script %}

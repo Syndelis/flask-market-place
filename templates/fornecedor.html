@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Painel do Fornecedor</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+{% endblock head %}
+
+{% block body %}
+
+	{% import 'components/Product.html' as prod %}
+    
+    {% block beforeHistory %}
+    {% endblock beforeHistory %}
+
+<article class="card">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tbody>
+                {% for row in data %}
+                {{ prod.editable(row, images[row[0]]) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> <!-- table-responsive .end// -->
+</article>
+{% endblock body %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script src="/static/js/fornecedor.js"></script>
+{% endblock script %}

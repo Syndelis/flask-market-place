@@ -83,4 +83,66 @@
         {% endif %}
     </td>
 </tr>
-{% endmacro %}
+{%- endmacro %}
+
+{% macro editable(row, images) -%}
+
+<div style="display: none;" id="hidden-content-{{row[0]}}">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Feedback</h4>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="col form-group">
+                    <label>Nome</label>
+                      <input name="name" type="text" class="form-control" value="{{row[2]}}">
+                </div>
+            </div>
+          <div class="form-row">
+              <div class="col form-group">
+                  <label>Preço</label>
+                    <input name="value" type="number" class="form-control" value="{{row[6]}}">
+              </div>
+              <div class="col form-group">
+                  <label>Quantidade</label>
+                    <input name="qtd" type="number" class="form-control" value="{{row[5]}}">
+              </div>
+          </div>
+          <div class="form-group">
+              <label>Descrição</label>
+              <input name="description" type="textarea" class="form-control" value="{{row[3]}}">
+          </div>
+          <div class="form-group">
+              <label>Imagens</label>
+              <div class="thumbs-wrap">
+
+                {% for image in images %}
+                <div class="item-thumb"> <img src="{{image}}"></div>
+                {% endfor %}
+
+              </div>
+              <label for="exampleFormControlFile1">
+                  <input name="files" type="file" class="form-control-file" multiple>
+              </label>
+          </div>
+          <button type="submit" name="id" value="{{row[0]}}" class="btn btn-primary btn-block">Confirmar</button>
+        </form>
+    </div>
+</div>
+
+
+<tr>
+    <td>
+        <a href="/produto/{{row[0]}}"><img src="{{row[4]}}" class="img-xs border"></a>
+    </td>
+    <td>
+        <p class="title mb-0">{{row[2]}}</p>
+        <var class="price text-muted">R$ {{row[6]}}</var>
+    </td>
+    <td>
+        <a class="fancybox btn btn-primary" data-fancybox data-src="#hidden-content-{{row[0]}}" href="javascript:;">
+            Editar
+        </a>
+    </td>
+</tr>
+
+{%- endmacro %}
