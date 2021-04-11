@@ -4,10 +4,18 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="static/styles/login.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet"> 
-
+        <link href="/static/styles/bootstrap-ec.css" rel="stylesheet" type="text/css">
+        <link href="/static/styles/ui-ec.css" rel="stylesheet" type="text/css">
+        <link href="/static/styles/responsive-ec.css" rel="stylesheet" type="text/css">
+        <link href="/static/styles/all-ec.min.css" rel="stylesheet" type="text/css">
+        <link href="/static/styles/style-ec.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+        <link href="static/styles/login.css" rel="stylesheet">
+        
+        <script src="/static/js/jquery-2.0.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
     </head>
 
     
@@ -17,8 +25,48 @@
     
     <body>
         <div>
+
             {% if error %}
             <p class="error"><strong>Erro:</strong> {{ error }}</p>
+
+            {% elif new %}
+            <div style="display: none;" id="hidden-content">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Novo Cliente</h4>
+                    <form id="signup" method="POST" action="">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>Nome</label>
+                                <input name="username" type="text" class="form-control" placeholder="" value={{nome}}>
+                            </div>
+                            <div class="col form-group">
+                                <label>Email</label>
+                                <input name="email" type="email" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input name="password" type="password" class="form-control" placeholder="" value={{senha}}>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Cadastrar-se</button>
+                    </form>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+
+                const SGNP = document.getElementById("signup");
+
+                $(document).ready(function() {
+                    $("#hidden-content").fancybox().trigger('click');
+                });
+
+                $(document).on('click', '.btn-primary', function (e) {
+                    console.log('clicked!');
+                    SGNP.submit();
+                })
+
+            </script>
             {% endif %}
 
             <div class="login-form">

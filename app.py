@@ -112,21 +112,48 @@ def addToCart(data=None):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	error = None
+	error = new = None
+	name = pswd = None
 	if request.method == 'POST':
 
 		name, pswd = request.form['username'], request.form['password']
+		new = True
 
-		cursor.execute("SELECT uid, nome, senha FROM PESSOA WHERE tipo=1;")
-		for row in cursor.fetchall():
+		# Usuário existente
+		if (email := request.form.get("email")) is None:
 
-			if (name, pswd) == row[1:]:
-				session['logged'] = row[0]
-				return redirect('/')
+			cursor.execute("SELECT uid, nome, senha FROM PESSOA WHERE tipo=1;")
+			for row in cursor.fetchall():
 
-		error = 'Credenciais Inválidos!'
+				# if (name, pswd) == row[1:]:
+				if name == row[1]:
+					new = False
+					
+					if pswd == row[2]:
+						session['logged'] = row[0]
+						return redirect('/')
 
-	return render_template('login.html', error=error)
+			if not new: error = 'Credenciais Inválidos!'
+
+		else:
+
+			cursor.execute("SELECT MAX(uid) FROM PESSOA;")
+
+			try: n = cursor.fetchall()[0][0] + 1
+			except: n = 0
+
+			cursor.execute(f"""
+				INSERT INTO PESSOA
+				VALUES ({n}, "{name}", "{email}", "{pswd}", 2);
+			""")
+
+			conn.commit()
+			session['logged'] = n
+
+
+			return redirect('/')
+
+	return render_template('login.html', error=error, new=new, nome=name, senha=pswd)
 
 
 @app.route('/logout')
