@@ -1,7 +1,58 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <title>Histórico de compras</title>
 {% endblock head %}
 
 {% block body %}
+
+	{% import 'components/Product.html' as prod %}
+
+<article class="card">
+    <div class="card-body">
+        <div class="row"> 
+            <div class="col-md-8">
+                {% if consumer %}
+                <h6 class="text-muted">Delivery to</h6>
+                <p>Michael Jackson <br>  
+                Phone +1234567890 Email: myname@pixsellz.com <br>
+                Location: Home number, Building name, Street 123,  Tashkent, UZB <br> 
+                P.O. Box: 100123
+                </p>
+
+                {% else %}
+                <h2>Administrador do Sistema</h2>
+
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <h6 class="text-muted">Payment</h6>
+
+                {% if consumer %}
+                <span class="text-success">
+                    <i class="fab fa-lg fa-cc-visa"></i>
+                    Visa  **** 4216  
+                </span>
+                <br/>
+                <p>Comissão: R$ {{total*0.01}} </p>
+                <span class="b">Total: R$ {{total}} </span>
+
+                {% else %}
+                <span class="b">Total: R$ {{total*0.01}} </span>
+
+                {% endif %}
+
+            </div>
+        </div> <!-- row.// -->
+    </div> <!-- card-body .// -->
+    <div class="table-responsive">
+    <table class="table table-hover">
+        <tbody>
+            {% for row in data %}
+            {{ prod.onHistory(row, consumer) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div> <!-- table-responsive .end// -->
+</article>
 {% endblock body %}

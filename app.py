@@ -235,7 +235,47 @@ def test():
 
 @app.route('/historico')
 def historico():
-	return render_template('historico.html', on_cart=getCart())
+
+	cursor.execute(f"""
+		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome
+		FROM PESSOA AS V JOIN (
+			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, P.fid
+			FROM (SELECT *  FROM HISTORICO WHERE cid={session.get("logged")}) AS H JOIN
+			PRODUTO AS P
+			ON H.pid=P.pid
+		) AS T
+		ON V.uid=T.fid;
+	""")
+
+	data = cursor.fetchall()
+
+	return render_template(
+		'historico.html', on_cart=getCart(),
+		data=data, consumer=True,
+		total=sum(row[4] for row in data)
+	)
+
+
+@app.route('/admin')
+def admin():
+
+	cursor.execute(f"""
+		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, C.nome
+		FROM PESSOA AS C JOIN PESSOA AS V JOIN (
+			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, H.cid, P.fid
+			FROM HISTORICO AS H JOIN PRODUTO AS P ON H.pid=P.pid
+		) AS T
+		ON V.uid=T.fid
+		ON C.uid=T.cid;
+	""")
+
+	data = cursor.fetchall()
+
+	return render_template(
+		'historico.html', on_cart=getCart(),
+		data=data, consumer=False,
+		total=sum(row[4] for row in data)
+	)
 
 
 if __name__ == '__main__':

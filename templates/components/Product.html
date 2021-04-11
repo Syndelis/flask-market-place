@@ -57,3 +57,30 @@
 	</td>
 </tr>
 {%- endmacro %}
+
+{% macro onHistory(row, consumer=True) -%}
+<tr>
+    <td>
+        <img src="{{row[2]}}" class="img-xs border">
+    </td>
+    <td>
+        <span class="text-muted">{{row[3]}}× </span><p class="title mb-0">{{row[1]}}</p>
+        <var class="price text-muted">R$ {{row[4]}}</var>
+    </td>
+    {% if consumer %}
+    <td> Fornecido por <br> {{row[5]}} </td>
+    
+    {% else %}
+    <td> Vendido para: {{row[6]}} <br> Por: {{row[5]}} </td>
+
+    {% endif %}
+    <td>
+        {% if consumer %}
+        <a href="#" class="btn  btn-primary" id="btn-buy" value="{{pid}}"> Comprar novamente </a>
+        <a href="/produto/{{row[0]}}" class="btn btn-light"> Página do Produto </a>
+        {% else %}
+        <span class="b">R$ {{row[4] * 0.01}} </span>
+        {% endif %}
+    </td>
+</tr>
+{% endmacro %}
