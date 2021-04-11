@@ -68,10 +68,10 @@
         <var class="price text-muted">R$ {{row[4]}}</var>
     </td>
     {% if consumer %}
-    <td> Fornecido por <br> {{row[5]}} </td>
+    <td> Fornecido por: {{row[5]}} <br> Em: {{row[6]}} </td>
     
     {% else %}
-    <td> Vendido para: {{row[6]}} <br> Por: {{row[5]}} </td>
+    <td> Vendido para: {{row[6]}} <br> Por: {{row[5]}} <br> Em: {{row[7]}} </td>
 
     {% endif %}
     <td>

@@ -269,14 +269,15 @@ def test():
 def historico():
 
 	cursor.execute(f"""
-		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome
+		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, T.data
 		FROM PESSOA AS V JOIN (
-			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, P.fid
+			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, P.fid, H.data
 			FROM (SELECT *  FROM HISTORICO WHERE cid={session.get("logged")}) AS H JOIN
 			PRODUTO AS P
 			ON H.pid=P.pid
 		) AS T
-		ON V.uid=T.fid;
+		ON V.uid=T.fid
+		ORDER BY T.data;
 	""")
 
 	data = cursor.fetchall()
@@ -317,13 +318,14 @@ def admin():
 
 
 	cursor.execute(f"""
-		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, C.nome
+		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, C.nome, T.data
 		FROM PESSOA AS C JOIN PESSOA AS V JOIN (
-			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, H.cid, P.fid
+			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, H.cid, P.fid, H.data
 			FROM HISTORICO AS H JOIN PRODUTO AS P ON H.pid=P.pid
 		) AS T
 		ON V.uid=T.fid
-		ON C.uid=T.cid;
+		ON C.uid=T.cid
+		ORDER BY T.data;
 	""")
 
 	data = cursor.fetchall()
