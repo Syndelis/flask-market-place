@@ -7,8 +7,7 @@ a {
 }
 
 header {
-    height: 70px;
-    background-color: #fff; 
+    background-color: #fff;
 }
 
 .navbar-left {
@@ -18,6 +17,7 @@ header {
 
 .navbar {
     display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar-logo {
@@ -131,6 +131,7 @@ body {
     background-color: #ddd;
 }
 
+
 .everything-container {
     background-color: #ddd;
     display: flex;
@@ -145,7 +146,6 @@ body {
     display: flex;
     justify-content: space-between;
     /* max-width: 1200px */
-    
 }
 
 .sidebar {
@@ -177,10 +177,12 @@ body {
     display: flex;
 }
 
+
 footer {
     display: flex;
-    margin-top: 40px;
+    margin-top: 300px;
     margin-bottom: 30px;
+    align-items: center;
     justify-content: center;
     background-color: #ddd;
 }

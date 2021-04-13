@@ -5,6 +5,8 @@
 html {
   font-family: "Inter", sans-serif;
   font-size: 15px;
+  background-color: #fff;
+
 }
 
 /* ========================
@@ -220,6 +222,16 @@ figure {
 }
 .form-noborder select.form-control-lg:not([size]):not([multiple]) {
   height: 2.875rem;
+}
+
+.card-provider {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.card-cart {
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 /* all clearfix */
@@ -860,6 +872,10 @@ a[class*=card]:hover .title {
 }
 
 /* GRID STYLE PRODUCT ITEM */
+.card {
+  top: 30px;
+}
+
 .card-product-grid {
   margin-bottom: 20px;
 }
@@ -1353,6 +1369,7 @@ a[class*=card]:hover .title {
 
 /* ================== PAGE DETAILS ==================  */
 .gallery-wrap .img-big-wrap {
+  margin-top: 20px;
   margin-bottom: 10px;
   border-radius: 0.37rem;
   overflow: hidden;
