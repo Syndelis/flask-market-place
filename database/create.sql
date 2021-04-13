@@ -1,6 +1,6 @@
 CREATE TABLE PESSOA (
 	uid INTEGER, nome VARCHAR(20), email VARCHAR(40),
-	senha VARCHAR(20), tipo BOOLEAN,
+	senha VARCHAR(20), tipo TINYINT,
 
 	PRIMARY KEY (uid)
 );

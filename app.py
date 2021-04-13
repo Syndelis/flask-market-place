@@ -91,10 +91,10 @@ def index():
 
 		filter_names = {
 			"Vendas": "vendas DESC",
-			"A-Z": "nome ASC",
-			"Z-A": "nome DESC",
 			"Preço+": "valor DESC",
-			"Preço-": "valor ASC"
+			"Preço-": "valor ASC",
+			"A-Z": "nome ASC",
+			"Z-A": "nome DESC"
 		}
 		filter_str = ", ".join(
 			code
@@ -194,14 +194,14 @@ def login():
 
 		else:
 
-			cursor.execute("SELECT MAX(uid) FROM PESSOA;")
-
-			try: n = cursor.fetchall()[0][0] + 1
-			except: n = 0
+			cursor.execute("SELECT IFNULL(MAX(uid)+1, 0) FROM PESSOA;")
+			n = cursor.fetchone()[0]
 
 			cursor.execute(f"""
 				INSERT INTO PESSOA
-				VALUES ({n}, "{name}", "{email}", "{pswd}", {Tipo.Comprador.value});
+				VALUES (
+					{n}, "{name}", "{email}", "{pswd}", {Tipo.Comprador.value}
+				);
 			""")
 
 			conn.commit()
@@ -275,9 +275,9 @@ def carrinho():
 			
 			cursor.execute(f"""
 				INSERT INTO HISTORICO
-				(SELECT C.pid, C.cid, P.fid, NOW(), C.qtd, C.qtd*P.valor AS total
+				SELECT C.pid, C.cid, P.fid, DATETIME(), C.qtd, C.qtd*P.valor AS total
 				FROM (SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={id}) AS C JOIN PRODUTO AS P
-				ON C.pid=P.pid);
+				ON C.pid=P.pid;
 			""")
 
 			cursor.execute(f"""
