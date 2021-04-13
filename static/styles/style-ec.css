@@ -71,6 +71,22 @@ header {
     align-items: center;
 }
 
+.navbar-dropdown .show {
+    min-width: 150px;
+    right: 150px;  
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    
+}
+
+/* .btn btn-outline-primary {
+    align-self: center;
+    height: 30px;
+    width: 30px;
+    border-style: solid;
+} */
+
 .cart {
     width: 30px;
     margin-top: 2px;
@@ -599,6 +615,12 @@ mark {
     padding: 13px 30px
 }
 
+.card-provider2 {
+    background-color: #fff;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
 
 .card-template {
     margin-bottom: 30px;
@@ -737,6 +759,45 @@ article:after,.form-group:after {
     clear: both;
     content: ""
 }
+
+.providers-column {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 30px; */
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.providers-column .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 50px;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.providers-column .row i {
+    /* margin-left: 150px; */
+    margin-top: 5px;
+}
+
+.cadastrar {
+    background-color: #fff;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+
+.cadastrar a {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 90px;
+}
+/* .providers-column .row + .row {
+    margin-bottom: 20px;
+} */
 
 .row-sm {
     margin-right: -7px;
