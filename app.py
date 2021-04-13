@@ -464,8 +464,8 @@ def fornecedor():
 		if pid >= 0:
 
 			cursor.execute(f"""
-				UPDATE PRODUTO AS P
-				SET P.nome="{name}", P.descricao="{description}", P.valor={value}, P.qtd={qtd}
+				UPDATE PRODUTO
+				SET nome="{name}", descricao="{description}", valor={value}, qtd={qtd}
 				WHERE pid={pid} AND fid={fid};
 			""")
 
