@@ -12,6 +12,20 @@
     {% block beforeHistory %}
     {% endblock beforeHistory %}
 
+    {% if error %}
+    <div style="display: none;" id="hidden-content-error">
+        <div class="card-body">
+            <h4 class="card-title mb-4">{{error}}</h4>
+        </div>
+    </div>
+    {% endif %}
+
+    {{ prod.editable([-1] + ['']*10, None) }}
+
+    <a class="fancybox btn btn-primary" data-fancybox data-src="#hidden-content--1" href="javascript:;">
+        Cadastrar novo
+    </a>
+
 <div class="card-provider">
 <article class="card">
     <div class="table-responsive">
@@ -31,4 +45,11 @@
 {% block script %}
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <script src="/static/js/fornecedor.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $("#hidden-content-error").fancybox().trigger('click');
+    });
+
+</script>
 {% endblock script %}

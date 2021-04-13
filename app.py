@@ -304,13 +304,13 @@ def carrinho():
 				WHERE cid={session.get("id")} AND pid={request.form.get("button-plus") or request.form.get("button-minus")};
 			""")
 
+			cursor.execute(f"""
+				DELETE FROM POSSUI_NO_CARRINHO
+				WHERE qtd<=0;
+			""")
+
 			conn.commit()
 
-			if amnt < 0:
-				cursor.execute(f"""
-					DELETE FROM POSSUI_NO_CARRINHO
-					WHERE qtd<=0;
-				""")
 
 
 	cursor.execute(f"""
@@ -434,6 +434,7 @@ def fornecedor():
 
 	conn, cursor = getDB()
 
+	error = ''
 	fid = session.get("id")
 	if request.method == 'POST':
 
@@ -442,29 +443,49 @@ def fornecedor():
 		value = request.form.get("value")
 		qtd = request.form.get("qtd")
 
-		pid = request.form.get("id")
+		pid = int(request.form.get("id"))
 
-		cursor.execute(f"""
-			UPDATE PRODUTO AS P
-			SET P.nome="{name}", P.descricao="{description}", P.valor={value}, P.qtd={qtd}
-			WHERE pid={pid} AND fid={fid};
-		""")
-
+		urls = []
 		if (files := request.files.getlist('files')):
 
-			urls = []
-
 			for file in files:
-				filename = secure_filename(file.filename)
-				urls.append(join(app.config['UPLOAD_FOLDER'], filename))
-				file.save(urls[-1])
+
+				if file.filename:
+					filename = secure_filename(file.filename)
+					urls.append(join(app.config['UPLOAD_FOLDER'], filename))
+					file.save(urls[-1])
+
+			if urls:
+				cursor.execute(f"""
+					INSERT INTO FOTO
+					VALUES {", ".join(f'({pid}, "{url[1:]}")' for url in urls)};
+				""")
+
+		if pid >= 0:
 
 			cursor.execute(f"""
-				INSERT INTO FOTO
-				VALUES {", ".join(f'({pid}, "{url[1:]}")' for url in urls)};
+				UPDATE PRODUTO AS P
+				SET P.nome="{name}", P.descricao="{description}", P.valor={value}, P.qtd={qtd}
+				WHERE pid={pid} AND fid={fid};
 			""")
 
-		conn.commit()
+			conn.commit()
+
+
+		elif urls:
+
+			cursor.execute("SELECT IFNULL(MAX(pid)+1, 0) FROM PRODUTO;")
+			pid = cursor.fetchone()[0]
+
+			cursor.execute(f"""
+				INSERT INTO PRODUTO VALUES
+				({pid}, {fid}, "{name}", "{description}", "{urls[0]}", {qtd}, {value}, 0);
+			""")
+
+			conn.commit()
+
+		else:
+			error = 'Não é possível cadastrar um produto sem imagem!'
 
 	cursor.execute(f"""
 		SELECT * FROM PRODUTO WHERE fid={fid};
@@ -482,7 +503,7 @@ def fornecedor():
 
 	return render_template(
 		'fornecedor.html', on_cart=getCart(), user=getUser(),
-		data=data, images=d, tipo=session.get('tipo')
+		data=data, images=d, tipo=session.get('tipo'), error=error
 	)
 
 

@@ -115,9 +115,11 @@
               <label>Imagens</label>
               <div class="thumbs-wrap">
 
+                {% if row[0] >= 0 %}
                 {% for image in images %}
                 <div class="item-thumb"> <img src="{{image}}"></div>
                 {% endfor %}
+                {% endif %}
 
               </div>
               <label for="exampleFormControlFile1">
@@ -129,7 +131,7 @@
     </div>
 </div>
 
-
+{% if row[0] >= 0 %}
 <tr>
     <td>
         <a href="/produto/{{row[0]}}"><img src="{{row[4]}}" class="img-xs border"></a>
@@ -144,5 +146,6 @@
         </a>
     </td>
 </tr>
+{% endif %}
 
 {%- endmacro %}
