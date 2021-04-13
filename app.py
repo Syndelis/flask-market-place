@@ -4,6 +4,12 @@ from json import loads
 from collections import defaultdict
 from werkzeug.utils import secure_filename
 from os.path import join
+from enum import Enum
+
+class Tipo(Enum):
+	Admin = 0
+	Fornecedor = 1
+	Comprador = 2
 
 app = Flask(__name__)
 app.secret_key = 'tpzin fi'
@@ -17,19 +23,44 @@ conn = sql.connect(
 )
 
 cursor = conn.cursor()
-amnt = 4
 
 def getCart():
 
 	cursor.execute(f"""
 		SELECT SUM(qtd) FROM POSSUI_NO_CARRINHO
-		WHERE cid={session.get('logged')};
+		WHERE cid={session.get('id')};
 	""")
 
 	return cursor.fetchall()[0][0] or 0
 
 
+def assertLogin(func):
+
+	def inner(*args, **kwargs):
+		if session.get('id') is None: return redirect('/login')
+		else: return func(*args, **kwargs)
+
+	inner.__name__ = func.__name__
+	return inner
+
+
+def assertTipo(tipo: Tipo):
+
+	def inner1(func):
+
+		def inner2(*args, **kwargs):
+
+			if session.get('tipo') != tipo.value: return redirect('/')
+			else: return func(*args, **kwargs)	
+
+		inner2.__name__ = func.__name__
+		return inner2
+
+	return inner1
+
+
 @app.route('/', methods=['GET', 'POST'])
+@assertLogin
 def index():
 
 	# TODO: um botão só
@@ -37,8 +68,6 @@ def index():
 	if request.method == 'POST':
 
 		query = request.form.get('search')
-		# query_str = f"MATCH (nome) AGAINST "\
-		# 			f"('{query}' IN NATURAL LANGUAGE MODE)" if query else ""
 		query_str = f"nome LIKE '%{query}%'" if query else ""
 
 		filter_names = {
@@ -59,7 +88,7 @@ def index():
 
 		between_str = f"valor BETWEEN {min} AND {max}" if min and max else ""
 		
-		where_clause = "WHERE " + (
+		where_clause = "WHERE qtd>0 AND " + (
 			"AND ".join(s for s in (query_str, between_str) if s)
 		) if (query_str or between_str) else ""
 
@@ -69,12 +98,8 @@ def index():
 			SELECT * FROM PRODUTO {where_clause} {filter_str};
 		""")
 
-	# Só pro produto final
-	# elif session.get('logged') is None:
-	# 	return redirect('/login')
-
 	else:
-		cursor.execute("SELECT * FROM PRODUTO;")
+		cursor.execute("SELECT * FROM PRODUTO WHERE qtd>0;")
 
 	return render_template(
 		'index.html',
@@ -89,7 +114,7 @@ def addToCart(data=None):
 	d = data or loads(request.get_data())
 	pid = int(d['pid'])
 	qtd = int(d['qtd'])
-	cid = session.get('logged')
+	cid = session.get('id')
 
 	cursor.execute(f"""
 		INSERT INTO POSSUI_NO_CARRINHO
@@ -122,15 +147,15 @@ def login():
 		# Usuário existente
 		if (email := request.form.get("email")) is None:
 
-			cursor.execute("SELECT uid, nome, senha FROM PESSOA WHERE tipo=1;")
+			cursor.execute("SELECT uid, nome, senha, tipo FROM PESSOA;")
 			for row in cursor.fetchall():
 
-				# if (name, pswd) == row[1:]:
 				if name == row[1]:
 					new = False
 					
 					if pswd == row[2]:
-						session['logged'] = row[0]
+						session['id'] = row[0]
+						session['tipo'] = row[3]
 						return redirect('/')
 
 			if not new: error = 'Credenciais Inválidos!'
@@ -144,11 +169,11 @@ def login():
 
 			cursor.execute(f"""
 				INSERT INTO PESSOA
-				VALUES ({n}, "{name}", "{email}", "{pswd}", 2);
+				VALUES ({n}, "{name}", "{email}", "{pswd}", {Tipo.Comprador.value});
 			""")
 
 			conn.commit()
-			session['logged'] = n
+			session['id'] = n
 
 
 			return redirect('/')
@@ -159,11 +184,12 @@ def login():
 @app.route('/logout')
 def logout():
 
-	session['logged'] = None
+	session['id'] = None
 	return redirect('/login')
 
 
 @app.route('/produto/<int:pid>')
+@assertLogin
 def produto(pid: int):
 
 	cursor.execute(f"""
@@ -191,16 +217,19 @@ def produto(pid: int):
 
 
 @app.route('/carrinho', methods=['GET', 'POST'])
+@assertLogin
 def carrinho():
 
 	# Testar por botão × vs +-
 	if request.method == 'POST':
 
+		id = session.get("id")
+
 		if request.form.get("remove") is not None:
 		
 			cursor.execute(f"""
 				DELETE FROM POSSUI_NO_CARRINHO
-				WHERE cid={session.get("logged")} AND pid={request.form.get("remove")};
+				WHERE cid={id} AND pid={request.form.get("remove")};
 			""")
 
 			conn.commit()
@@ -210,13 +239,18 @@ def carrinho():
 			cursor.execute(f"""
 				INSERT INTO HISTORICO
 				(SELECT C.pid, C.cid, P.fid, NOW(), C.qtd, C.qtd*P.valor AS total
-				FROM (SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={session.get("logged")}) AS C JOIN PRODUTO AS P
+				FROM (SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={id}) AS C JOIN PRODUTO AS P
 				ON C.pid=P.pid);
 			""")
 
 			cursor.execute(f"""
+				UPDATE PRODUTO AS P
+				SET qtd=qtd-IFNULL((SELECT qtd FROM POSSUI_NO_CARRINHO AS C WHERE P.pid=C.pid AND C.cid={id}),0);
+			""")
+
+			cursor.execute(f"""
 				DELETE FROM POSSUI_NO_CARRINHO
-				WHERE cid={session.get("logged")};
+				WHERE cid={session.get("id")};
 			""")
 
 			conn.commit()
@@ -230,7 +264,7 @@ def carrinho():
 			cursor.execute(f"""
 				UPDATE POSSUI_NO_CARRINHO
 				SET qtd=qtd+({amnt})
-				WHERE cid={session.get("logged")} AND pid={request.form.get("button-plus") or request.form.get("button-minus")};
+				WHERE cid={session.get("id")} AND pid={request.form.get("button-plus") or request.form.get("button-minus")};
 			""")
 
 			conn.commit()
@@ -245,7 +279,7 @@ def carrinho():
 	cursor.execute(f"""
 		SELECT PROD.pid, PROD.nome, PROD.capa, PROD.valor, PES.nome, C.qtd FROM PESSOA AS PES JOIN
 			PRODUTO AS PROD JOIN
-			(SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={session.get("logged")}) AS C
+			(SELECT * FROM POSSUI_NO_CARRINHO WHERE cid={session.get("id")}) AS C
 			ON PROD.pid=C.pid
 		ON PES.uid=PROD.fid;
 	""")
@@ -266,13 +300,14 @@ def test():
 
 
 @app.route('/historico')
+@assertLogin
 def historico():
 
 	cursor.execute(f"""
 		SELECT T.pid, T.nome, T.capa, T.qtd, T.total, V.nome, T.data
 		FROM PESSOA AS V JOIN (
 			SELECT H.pid, P.nome, P.capa, H.qtd, H.total, P.fid, H.data
-			FROM (SELECT *  FROM HISTORICO WHERE cid={session.get("logged")}) AS H JOIN
+			FROM (SELECT *  FROM HISTORICO WHERE cid={session.get("id")}) AS H JOIN
 			PRODUTO AS P
 			ON H.pid=P.pid
 		) AS T
@@ -290,6 +325,8 @@ def historico():
 
 
 @app.route('/admin', methods=['GET', 'POST'])
+@assertLogin
+@assertTipo(Tipo.Admin)
 def admin():
 
 	if request.method == 'POST':
@@ -347,9 +384,11 @@ def admin():
 
 
 @app.route("/fornecedor", methods=['GET', 'POST'])
+@assertLogin
+@assertTipo(Tipo.Fornecedor)
 def fornecedor():
 
-	fid = session.get("logged")
+	fid = session.get("id")
 	if request.method == 'POST':
 
 		name = request.form.get("name")

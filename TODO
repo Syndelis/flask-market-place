@@ -1,4 +1,6 @@
-- Index (mostrar todos os produtos e filtragem)
-- Login
-- Página do vendedor (todos os produtos dele, clicáveis)
-	- Página de edição do produto
+> Login: ajeitar mensagem de credenciais inválidos
+> Decrementar produtos depois da compra
+- Limitar adicionar ao carrinho pela quantidade máxima disponível
+> Na listagem de produtos: "SELECT * FROM PRODUTO WHERE qtd>0;"
+- Migrar para SQLite
+- Botões de "Meus produtos", "Histórico" e "Logout" no "Minha Conta"
