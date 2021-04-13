@@ -783,6 +783,11 @@ article:after,.form-group:after {
     margin-top: 5px;
 }
 
+.cadastrar-btn {
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
 .cadastrar {
     background-color: #fff;
     margin-left: 50px;
