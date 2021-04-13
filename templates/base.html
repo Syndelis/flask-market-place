@@ -47,24 +47,19 @@
 				<a href="#" class="ml-3 icontext" data-toggle="dropdown" data-offset="20,10" aria-expanded="false">
 					<div class="icon"><i class="fa fa-lg fa-user-circle"></i></div>
 					<div class="text"> 
-						<small class="text-muted">Fazer login / Crie sua conta</small> <br>
+						<small class="text-muted">Bem-vindo, {{user}}</small> <br>
 						<span>Minha conta <i class="fa fa-caret-down"></i></span>
 					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 20px; left: 1440px; transform: translate3d(140px, 46px, 0px);">
-					<form class="px-4 py-3">
-						<div class="form-group">
-						  <label>E-mail</label>
-						  <input type="email" class="form-control" placeholder="email@exemplo.com">
-						</div>
-						<div class="form-group">
-						  <label>Senha</label>
-						  <input type="password" class="form-control" placeholder="Senha">
-						</div>
-						<button type="submit" class="btn btn-primary">Criar conta</button>
-						</form>
-						<hr class="dropdown-divider">
-						<a class="dropdown-item" href="#">Já tem uma conta? Fazer login</a>
+					{% if tipo == 1 %}
+					<a href="/fornecedor" class="btn btn-outline-primary">Meus Produtos</a>
+					{% elif tipo == 0 %}
+					<a href="/admin" class="btn btn-outline-primary">Admin</a>
+					{% endif %}
+					<a href="/historico" class="btn btn-outline-primary">Histórico</a>
+					<hr class="dropdown-divider">
+					<a href="/logout" class="btn btn-primary">Logout</a>
 				</div> <!--  dropdown-menu .// -->
 			</div>
 		</div>	

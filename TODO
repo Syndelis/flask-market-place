@@ -2,5 +2,5 @@
 > Decrementar produtos depois da compra
 - Limitar adicionar ao carrinho pela quantidade máxima disponível
 > Na listagem de produtos: "SELECT * FROM PRODUTO WHERE qtd>0;"
-- Migrar para SQLite
-- Botões de "Meus produtos", "Histórico" e "Logout" no "Minha Conta"
+> Migrar para SQLite
+> Botões de "Meus produtos", "Histórico" e "Logout" no "Minha Conta"
