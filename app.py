@@ -445,6 +445,9 @@ def fornecedor():
 
 		pid = int(request.form.get("id"))
 
+		cursor.execute("SELECT IFNULL(MAX(pid)+1, 0) FROM PRODUTO;")
+		epid = cursor.fetchone()[0]
+
 		urls = []
 		if (files := request.files.getlist('files')):
 
@@ -458,7 +461,7 @@ def fornecedor():
 			if urls:
 				cursor.execute(f"""
 					INSERT INTO FOTO
-					VALUES {", ".join(f'({pid}, "{url[1:]}")' for url in urls)};
+					VALUES {", ".join(f'({pid if pid >= 0 else epid}, "{url[1:]}")' for url in urls)};
 				""")
 
 		if pid >= 0:
@@ -474,12 +477,9 @@ def fornecedor():
 
 		elif urls:
 
-			cursor.execute("SELECT IFNULL(MAX(pid)+1, 0) FROM PRODUTO;")
-			pid = cursor.fetchone()[0]
-
 			cursor.execute(f"""
 				INSERT INTO PRODUTO VALUES
-				({pid}, {fid}, "{name}", "{description}", "{urls[0]}", {qtd}, {value}, 0);
+				({epid}, {fid}, "{name}", "{description}", "{urls[0]}", {qtd}, {value}, 0);
 			""")
 
 			conn.commit()
