@@ -17,14 +17,6 @@ app.secret_key = 'tpzin fi'
 app.config['SERVER_NAME'] = '127.0.0.1:5000'
 app.config['UPLOAD_FOLDER'] = "./static/img/user-content"
 
-# conn = sql.connect(
-# 	'alexandrum.go.ro',
-# 	'tpbd', 'lcrocha',
-# 	'tpbd'
-# )
-
-# cursor = conn.cursor()
-
 def getDB():
 	db = getattr(g, '_database', None)
 	if db is None: db = g._database = sql.connect("database/tp.db")
